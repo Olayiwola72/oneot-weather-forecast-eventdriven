@@ -18,6 +18,7 @@ bootJar {
 }
 
 dependencies {
+	implementation project(':common-microservice')  // Include common module
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }

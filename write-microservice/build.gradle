@@ -18,6 +18,9 @@ bootJar {
 }
 
 dependencies {
+	implementation project(':common-microservice')  // Include common module
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }
