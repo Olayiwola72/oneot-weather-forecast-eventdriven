@@ -1,0 +1,27 @@
+services:
+
+  db:
+    build:
+      context: ./
+      dockerfile: sql.Dockerfile
+    environment:
+      POSTGRES_DB: weather
+      POSTGRES_USER: weather
+      POSTGRES_PASSWORD: weather
+    ports:
+      - 5432:5432  #HOST:CONTAINER
+
+  # app:
+  #   build:
+  #     context: ./
+  #     dockerfile: app.Dockerfile
+  #   ports:
+  #     - "8086:8086"
+  #   environment:
+  #     SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT:  org.hibernate.dialect.MySQL8Dialect # Override .env
+  #     SPRING_DATASOURCE_USERNAME: root # Override .env
+  #     SPRING_DATASOURCE_PASSWORD: root # Override .env
+  #     SPRING_PROFILES_ACTIVE: prod # set profile
+  #     SPRING_DATASOURCE_URL: jdbc:mysql://docker-mysql:3306/${SPRING_DATASOURCE_NAME}?autoReconnect=true&createDatabaseIfNotExist=true # Override .env
+  #   depends_on:
+  #     - docker-mysql

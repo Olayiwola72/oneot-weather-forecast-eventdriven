@@ -1,0 +1,5 @@
+rootProject.name = 'weather-forecast'
+
+include ':query-microservice'
+include ':write-microservice'
+include ':common-microservice'
