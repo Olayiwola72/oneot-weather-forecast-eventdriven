@@ -15,7 +15,7 @@ class WeatherPeriodTest {
     private Integer tempMax;
     private String text;
     private List<Place> places;
-    private Peipsi peipsi;
+    private String peipsi;
 
     @BeforeEach
     void setUp(){
@@ -24,9 +24,9 @@ class WeatherPeriodTest {
         tempMax = 25;
         text = "Clear sky";
         places = Arrays.asList(
-                new Place("Tallinn", "Sunny", 20)
+                new Place("Tallinn", "Sunny", 20, 10)
         );
-        peipsi = new Peipsi("Southerly wind 4-8 m/s. Wave height 0,4-0,9");
+        peipsi = "Southwest, west wind 4-8, in gusts up to 12 m/s.";
     }
 
     @Test

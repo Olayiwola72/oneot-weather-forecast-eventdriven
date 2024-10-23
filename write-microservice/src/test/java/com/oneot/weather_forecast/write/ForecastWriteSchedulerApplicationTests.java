@@ -1,8 +1,7 @@
-package com.oneot.weather_forecast.common;
+package com.oneot.weather_forecast.write;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootTest
 class ForecastWriteSchedulerApplicationTests {

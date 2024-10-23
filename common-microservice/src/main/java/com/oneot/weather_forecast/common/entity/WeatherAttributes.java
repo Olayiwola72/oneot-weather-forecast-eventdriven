@@ -26,4 +26,10 @@ public abstract class WeatherAttributes {
     @JacksonXmlProperty(localName = "tempmin", isAttribute = true)
     private Integer tempMin;
 
+    /**
+     * Represents the maximum temperature.
+     */
+    @JacksonXmlProperty(localName = "tempmax", isAttribute = true)
+    private Integer tempMax;
+
 }

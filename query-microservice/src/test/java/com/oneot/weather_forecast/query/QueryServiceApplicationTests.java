@@ -1,10 +1,10 @@
-package com.oneot.weather_forecast.common;
+package com.oneot.weather_forecast.query;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WeatherForecastApplicationTests {
+class QueryServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

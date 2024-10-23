@@ -15,7 +15,7 @@ class NightTest {
     private int tempMax;
     private List<Place> places;
     private String text;
-    private Peipsi peipsi;
+    private String peipsi;
     private Night night;
 
     @BeforeEach
@@ -24,10 +24,10 @@ class NightTest {
         tempMin = 10;
         tempMax = 15;
         places = List.of(
-                new Place("TestCity", phenomenon, tempMin)
+                new Place("TestCity", phenomenon, tempMin, tempMax)
         );
         text = "Clear night sky";
-        peipsi = new Peipsi("Calm waters");
+        peipsi = "Calm waters";
         night = new Night(phenomenon, tempMin, tempMax, text, places, peipsi);
 
     }

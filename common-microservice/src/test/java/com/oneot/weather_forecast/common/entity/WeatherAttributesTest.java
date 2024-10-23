@@ -1,5 +1,6 @@
 package com.oneot.weather_forecast.common.entity;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,12 +11,23 @@ class TestWeatherAttributes extends WeatherAttributes {
         super();
     }
 
-    TestWeatherAttributes(String phenomenon, Integer tempMin) {
-        super(phenomenon, tempMin);
+    TestWeatherAttributes(String phenomenon, Integer tempMin, Integer tempMax) {
+        super(phenomenon, tempMin, tempMax);
     }
 }
 
 class WeatherAttributesTest {
+
+    private String expectedPhenomenon;
+    private Integer expectedTempMin;
+    private Integer expectedTempMax;
+
+    @BeforeEach
+    void setUp(){
+        expectedPhenomenon = "Clear";
+        expectedTempMin = -5;
+        expectedTempMax = 10;
+    }
 
     @Test
     void testNoArgsConstructor() {
@@ -31,29 +43,27 @@ class WeatherAttributesTest {
     @Test
     void testAllArgsConstructor() {
         // Given: A WeatherAttributes object created with all arguments constructor
-        String expectedPhenomenon = "Clear";
-        Integer expectedTempMin = 5;
-
-        TestWeatherAttributes attributes = new TestWeatherAttributes(expectedPhenomenon, expectedTempMin);
+        TestWeatherAttributes attributes = new TestWeatherAttributes(expectedPhenomenon, expectedTempMin, expectedTempMax);
 
         // Then: The fields should be set correctly
         assertEquals(expectedPhenomenon, attributes.getPhenomenon());
         assertEquals(expectedTempMin, attributes.getTempMin());
+        assertEquals(expectedTempMax, attributes.getTempMax());
     }
 
     @Test
     void testSettersAndGetters() {
         // Given: A WeatherAttributes object
-        String phenomenon = "Snow";
-        Integer tempMin = -2;
         TestWeatherAttributes attributes = new TestWeatherAttributes();
 
         // When: We set the values using setters
-        attributes.setPhenomenon(phenomenon);
-        attributes.setTempMin(tempMin);
+        attributes.setPhenomenon(expectedPhenomenon);
+        attributes.setTempMin(expectedTempMin);
+        attributes.setTempMax(expectedTempMax);
 
         // Then: The getters should return the correct values
-        assertEquals(phenomenon, attributes.getPhenomenon());
-        assertEquals(tempMin, attributes.getTempMin());
+        assertEquals(expectedPhenomenon, attributes.getPhenomenon());
+        assertEquals(expectedTempMin, attributes.getTempMin());
+        assertEquals(expectedTempMax, attributes.getTempMax());
     }
 }

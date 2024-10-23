@@ -1,7 +1,9 @@
 package com.oneot.weather_forecast.common.entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -10,8 +12,15 @@ import java.util.List;
  * This class extends WeatherPeriod to specifically model daytime weather attributes.
  */
 @Entity
+@Table(name = "day_forecast")  // DAY is a reserved keyword. Change the table name to avoid conflict
 @NoArgsConstructor
+@Getter
+@Setter
 public class Day extends WeatherPeriod {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     /**
      * Constructs a new Day instance with the specified weather attributes.
@@ -23,7 +32,7 @@ public class Day extends WeatherPeriod {
      * @param text Additional textual description of the day weather.
      * @param peipsi Specific weather information for Peipsi during the day, if applicable.
      */
-    public Day(String phenomenon, int tempMin, int tempMax, String text, List<Place> places, Peipsi peipsi) {
+    public Day(String phenomenon, int tempMin, int tempMax, String text, List<Place> places, String peipsi) {
         super(phenomenon, tempMin, tempMax, text, places, peipsi); // Call the constructor of the WeatherPeriod superclass
     }
 

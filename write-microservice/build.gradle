@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management'
 }
 
-group = 'com.homework.sub-write-module'
+group = 'com.weather-forecast.sub-write-module'
 version = '0.0.1-SNAPSHOT'
 
 java {

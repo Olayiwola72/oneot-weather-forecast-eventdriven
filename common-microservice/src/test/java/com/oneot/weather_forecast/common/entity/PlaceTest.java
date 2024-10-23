@@ -9,6 +9,7 @@ class PlaceTest {
     private String name;
     private String phenomenon;
     private Integer tempMin;
+    private Integer tempMax;
 
     @BeforeEach
     void setUp() {
@@ -16,6 +17,7 @@ class PlaceTest {
         name = "Tallinn";
         phenomenon = "Cloudy";
         tempMin = 15;
+        tempMax = 20;
     }
 
     @Test
@@ -29,17 +31,8 @@ class PlaceTest {
     }
 
     @Test
-    void testPlaceConstructor() {
-        Place place = new Place(name);
-
-        assertEquals(name, place.getName());
-        assertNull(place.getPhenomenon());
-        assertNull(place.getTempMin());
-    }
-
-    @Test
     void testAllArgsConstructor() {
-        Place place = new Place(name, phenomenon, tempMin);
+        Place place = new Place(name, phenomenon, tempMin, tempMax);
 
         assertEquals(name, place.getName());
         assertEquals(phenomenon, place.getPhenomenon());
