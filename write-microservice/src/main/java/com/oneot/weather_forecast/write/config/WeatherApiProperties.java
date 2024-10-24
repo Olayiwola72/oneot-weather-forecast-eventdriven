@@ -13,18 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "weather.api")
 public record WeatherApiProperties(
-    /**
-     * The base URL of the Weather API.
-     * This should be the endpoint where weather data can be fetched.
-     */
-    String url,
-
-    /**
-     * The language code for the weather data.
-     * This determines the language of the weather information returned by the API.
-     */
-    String lang
+        String url,   // The base URL of the Weather API.
+        String lang   // The language code for the weather data.
 ) {
-    // This is a record class, so the constructor, getters, equals, hashCode, and toString
-    // methods are automatically generated.
 }

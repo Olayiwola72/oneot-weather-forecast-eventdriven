@@ -2,6 +2,7 @@ package com.oneot.weather_forecast.query.service;
 
 import com.oneot.weather_forecast.common.entity.Forecast;
 import com.oneot.weather_forecast.common.repository.ForecastRepository;
+import com.oneot.weather_forecast.query.dto.response.ForecastResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Service class for managing weather forecasts.
@@ -37,12 +39,6 @@ public class ForecastService {
      * @param place The location to search forecasts for.
      * @return A list of forecasts matching the place.
      */
-    @Operation(summary = "Retrieve all forecasts for the given place")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Retrieve all forecasts for the given place", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = Forecast.class))
-        })
-    })
     public List<Forecast> getAllForecastsByPlace(String place) {
         return forecastRepository.findAllByPlace(place); // Fetch forecasts from the repository
     }
@@ -52,15 +48,9 @@ public class ForecastService {
      *
      * @return A list of today's forecasts for all locations.
      */
-    @Operation(summary = "Retrieve all forecasts for the current day")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Retrieve all forecasts for the current day", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = Forecast.class))
-        })
-    })
-    public List<Forecast> getTodayForecasts() {
+    public Optional<Forecast> getTodayForecast() {
         String today = LocalDate.now().toString(); // Get the current date in yyyy-MM-dd format
-        return forecastRepository.findAllByDate(today); // Fetch today's forecasts from the repository
+        return forecastRepository.findByDate(today);
     }
 
 }

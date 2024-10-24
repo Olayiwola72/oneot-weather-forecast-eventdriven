@@ -5,9 +5,9 @@ services:
       context: ./
       dockerfile: sql.Dockerfile
     environment:
-      POSTGRES_DB: weather
-      POSTGRES_USER: weather
-      POSTGRES_PASSWORD: weather
+      POSTGRES_DB: ${SPRING_DATASOURCE_NAME}
+      POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
     ports:
       - 5432:5432  #HOST:CONTAINER
 
@@ -19,19 +19,32 @@ services:
     depends_on:
       - db
     ports:
-      - 8080:8080
+      - 8081:8081
 
-  # app:
-  #   build:
-  #     context: ./
-  #     dockerfile: app.Dockerfile
-  #   ports:
-  #     - "8086:8086"
-  #   environment:
-  #     SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT:  org.hibernate.dialect.MySQL8Dialect # Override .env
-  #     SPRING_DATASOURCE_USERNAME: root # Override .env
-  #     SPRING_DATASOURCE_PASSWORD: root # Override .env
-  #     SPRING_PROFILES_ACTIVE: prod # set profile
-  #     SPRING_DATASOURCE_URL: jdbc:mysql://docker-mysql:3306/${SPRING_DATASOURCE_NAME}?autoReconnect=true&createDatabaseIfNotExist=true # Override .env
-  #   depends_on:
-  #     - docker-mysql
+  query-service:
+    build:
+      context: ./
+      dockerfile: query.Dockerfile
+    ports:
+      - "8093:8093"
+    environment:
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME} 
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SPRING_PROFILES_ACTIVE: prod # set profile
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${SPRING_DATASOURCE_NAME}
+    depends_on:
+      - db
+
+  write-service:
+    build:
+      context: ./
+      dockerfile: write.Dockerfile
+    ports:
+      - "8091:8091"
+    environment:
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME} 
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SPRING_PROFILES_ACTIVE: prod # set profile
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${SPRING_DATASOURCE_NAME}
+    depends_on:
+      - db

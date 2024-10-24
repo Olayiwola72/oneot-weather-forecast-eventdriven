@@ -13,10 +13,6 @@ java {
 	}
 }
 
-bootJar {
-	enabled = true
-}
-
 dependencies {
 	implementation project(':common-microservice')  // Include common module
 	implementation 'org.springframework.boot:spring-boot-starter-web'

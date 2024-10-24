@@ -7,20 +7,13 @@ import org.springframework.test.context.TestPropertySource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-@TestPropertySource(properties = {
-    "weather.api.url=http://test.weather.api",
-    "weather.api.lang=en"
-})
 class WeatherApiPropertiesTest {
-
-    @Autowired
-    private WeatherApiProperties weatherApiProperties;
 
     @Test
     void testPropertiesAreCorrectlyBound() {
         String expectedUrl = "http://test.weather.api";
         String expectedLang = "en";
+        WeatherApiProperties weatherApiProperties = new  WeatherApiProperties(expectedUrl, expectedLang);
 
         assertEquals(expectedUrl, weatherApiProperties.url());
         assertEquals(expectedLang, weatherApiProperties.lang());

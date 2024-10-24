@@ -1,10 +1,12 @@
 package com.oneot.weather_forecast.query.exception;
 
+import java.lang.annotation.Annotation;
 import java.util.List;
 import java.util.Objects;
 
 import com.oneot.weather_forecast.common.dto.ErrorField;
 import com.oneot.weather_forecast.common.dto.ErrorResponse;
+import jakarta.validation.Path;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.annotation.Profile;
@@ -121,13 +123,24 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException ex) {
 		ErrorResponse errorResponse = new ErrorResponse();
 
-    	for(ConstraintViolation<?> constraintViolation: ex.getConstraintViolations()) {
-    		String errorMessage = constraintViolation.getMessage();
-    		String fieldName = constraintViolation.getPropertyPath().toString().isBlank() ? null : constraintViolation.getPropertyPath().toString();
+		for (ConstraintViolation<?> constraintViolation : ex.getConstraintViolations()) {
+			// Extract field name dynamically
+            String fieldName = getLastFieldName(constraintViolation.getPropertyPath());
 
-    		ErrorField errorField = new ErrorField(errorMessage, fieldName);
-    		errorResponse.addErrors(errorField);
-    	}
+			// Dynamically get the validation code (e.g., NotBlank) from the constraint
+			String validationCode = getValidationCode(constraintViolation);
+
+			// Try to resolve a custom message for this specific field
+			String errorMessage = messageSource.getMessage(
+					validationCode,
+					new Object[] { fieldName },
+					constraintViolation.getMessage(), // Use getMessage() as fallback if no message is found
+					LocaleContextHolder.getLocale()
+			);
+
+			ErrorField errorField = new ErrorField(errorMessage, fieldName);
+			errorResponse.addErrors(errorField);
+		}
 
     	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
 	}
@@ -336,4 +349,25 @@ public class GlobalExceptionHandler {
         }
         return null;
     }
+
+	// Helper method to extract the last node (field name) from the property path
+	private String getLastFieldName(Path propertyPath) {
+		if (propertyPath == null) return null;
+
+		String fieldName = null;
+		for (Path.Node node : propertyPath) {
+			fieldName = node.getName(); // Get the last segment (field name)
+		}
+
+		return fieldName;
+	}
+
+	// Helper method to get the validation code from the ConstraintViolation
+	private String getValidationCode(ConstraintViolation<?> violation) {
+		// Get the annotation class for the constraint (e.g., NotBlank, Size)
+		Annotation annotation = violation.getConstraintDescriptor().getAnnotation();
+
+		// Return the simple name of the annotation class as the validation code
+		return annotation.annotationType().getSimpleName();
+	}
 }

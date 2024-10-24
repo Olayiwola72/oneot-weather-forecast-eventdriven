@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -81,13 +82,12 @@ class ForecastServiceIntegrationTest {
     }
 
     @Test
-     void testGetTodayForecasts() {
+     void testGetTodayForecast() {
         // When
-        List<Forecast> result = forecastService.getTodayForecasts();
+        Optional<Forecast> result = forecastService.getTodayForecast();
 
         // Then
         assertThat(result).isNotNull(); // Check that the result is not null
-        assertThat(result).hasSize(1); // Check that the result size is as expected
-        assertThat(result).extracting(Forecast::getDate).containsOnly(today); // Check the contents
+        assertThat(result).isPresent(); // Check that the result size is as expected
     }
 }

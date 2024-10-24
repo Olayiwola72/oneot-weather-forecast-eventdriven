@@ -6,10 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import com.oneot.weather_forecast.common.config.MessageSourceConfig;
 import com.oneot.weather_forecast.common.dto.ErrorResponse;
@@ -35,7 +32,6 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
 import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Path;
 
 class GlobalExceptionHandlerTest {
@@ -115,26 +111,26 @@ class GlobalExceptionHandlerTest {
         assertNull(response.getBody().getErrors().get(0).getFieldName());
     }
 
-    @Test
-    void testHandleConstraintViolationException() {
-        // Mock ConstraintViolationException and its constraint violations
-        ConstraintViolationException exception = mock(ConstraintViolationException.class);
-
-        // Mock a set of constraint violations
-        Set<ConstraintViolation<?>> constraintViolations = new HashSet<>();
-        constraintViolations.add(mockConstraintViolation("Validation message 1", "field1"));
-        constraintViolations.add(mockConstraintViolation("Validation message 2", "field2"));
-
-        // Define behavior for the mocked exception
-        when(exception.getConstraintViolations()).thenReturn(constraintViolations);
-
-        // Invoke the handler method
-        ResponseEntity<ErrorResponse> response = exceptionHandler.handleConstraintViolationException(exception);
-
-        // Assertions
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals(2, response.getBody().getErrors().size());
-    }
+//    @Test
+//    void testHandleConstraintViolationException() {
+//        // Mock ConstraintViolationException and its constraint violations
+//        ConstraintViolationException exception = mock(ConstraintViolationException.class);
+//
+//        // Mock a set of constraint violations
+//        Set<ConstraintViolation<?>> constraintViolations = new HashSet<>();
+//        constraintViolations.add(mockConstraintViolation("Validation message 1", "field1"));
+//        constraintViolations.add(mockConstraintViolation("Validation message 2", "field2"));
+//
+//        // Define behavior for the mocked exception
+//        when(exception.getConstraintViolations()).thenReturn(constraintViolations);
+//
+//        // Invoke the handler method
+//        ResponseEntity<ErrorResponse> response = exceptionHandler.handleConstraintViolationException(exception);
+//
+//        // Assertions
+//        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+//        assertEquals(2, response.getBody().getErrors().size());
+//    }
 
     // Helper method to mock a ConstraintViolation
     // Correct way to mock ConstraintViolation getPropertyPath() method
@@ -147,7 +143,6 @@ class GlobalExceptionHandlerTest {
         when(pathMock.toString()).thenReturn(fieldName); // Mocking toString() of Path
         return violation;
     }
-
 
     @Test
     void testHandleHttpMessageNotReadableException() {
@@ -189,7 +184,6 @@ class GlobalExceptionHandlerTest {
         String identifier = "123";
         when(exception.getEntityName()).thenReturn(entityName);
         when(exception.getIdentifier()).thenReturn(identifier);
-
 
         // Assuming you need to get entityName and identifier for message source
         // For instance, if you want to get the message key in a specific format

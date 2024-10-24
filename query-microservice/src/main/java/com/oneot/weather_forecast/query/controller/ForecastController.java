@@ -1,24 +1,24 @@
 package com.oneot.weather_forecast.query.controller;
 
 import com.oneot.weather_forecast.common.entity.Forecast;
-import com.oneot.weather_forecast.query.dto.request.ForecastRequest;
 import com.oneot.weather_forecast.query.dto.response.ForecastResponse;
 import com.oneot.weather_forecast.query.dto.response.ForecastResponseMapper;
 import com.oneot.weather_forecast.query.service.ForecastService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 /**
  * ForecastController handles incoming requests related to weather forecasts.
@@ -49,22 +49,25 @@ public class ForecastController {
     /**
      * Endpoint to get all forecasts for a given location.
      *
-     * @param request The request containing the location for which forecasts are requested.
+     * @param place The location for which forecasts are requested.
      * @return A list of forecasts for the specified location.
      */
-    @Operation(summary = "Endpoint to get all forecasts for a given location")
+    @Operation(summary = "Get all forecasts by place")
     @ApiResponses(value = { @ApiResponse(
             responseCode = "200",
-            description = "Endpoint to get all forecasts for a given location. The location is matched against the places list in the WeatherPeriod (day or night).",
+            description = "Retrieve weather forecasts for a specific place. The location is matched against the places list in the WeatherPeriod (day or night).",
             content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Forecast.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ForecastResponse.class))
             }),
     })
-    @GetMapping(path = "${routes.api.places}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "${routes.api.places}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ForecastResponse>> getAllForecastsByPlace(
-            @Valid @RequestBody ForecastRequest request // Validates the request body
+            @Parameter(description = "Name of the place to retrieve forecasts for", example = "Harku")
+            @RequestParam(name = "place", required = true)
+                    @NotBlank
+            String place // URL parameter 'place'
     ) {
-        List<Forecast> forecasts = forecastService.getAllForecastsByPlace(request.place()); // Fetch forecasts using the service
+        List<Forecast> forecasts = forecastService.getAllForecastsByPlace(place); // Fetch forecasts using the service
 
         // Map the List<Forecast> to List<ForecastResponse>
         List<ForecastResponse> forecastResponses = forecastResponseMapper.toForecastResponseList(forecasts);
@@ -79,11 +82,19 @@ public class ForecastController {
      */
     @Operation(summary = "Endpoint to get today's forecasts for all locations")
     @ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Endpoint to get today's forecasts for all locations", content = {
-            @Content(mediaType = "application/json", schema = @Schema(implementation = Forecast.class)) }),
+            @Content(mediaType = "application/json", schema = @Schema(implementation = ForecastResponse.class)) }),
     })
     @GetMapping(path = "${routes.api.today}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Forecast> getTodayForecasts() {
-        return forecastService.getTodayForecasts(); // Fetch today's forecasts using the service
+    public ResponseEntity<ForecastResponse> getTodayForecast() {
+        Forecast forecast = null;
+        Optional<Forecast> forecastOptional = forecastService.getTodayForecast();  // Fetch today's forecast using the service
+        if(forecastOptional.isPresent()){
+            forecast = forecastOptional.get();
+        }
+
+        ForecastResponse forecastResponse = forecastResponseMapper.toForecastResponse(forecast);
+
+        return ResponseEntity.ok(forecastResponse); // Return ResponseEntity with today's forecast
     }
     
 }

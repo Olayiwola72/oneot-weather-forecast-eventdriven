@@ -10,8 +10,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
 @ActiveProfiles("test")
@@ -61,7 +63,7 @@ class ForecastRepositoryTest {
     }
 
     @Test
-    void testFindAllByDate() {
+    void testFindByDate() {
         //Arrange
         Forecast forecast = new Forecast(
                 "2024-10-03",
@@ -71,10 +73,10 @@ class ForecastRepositoryTest {
         forecastRepository.save(forecast);
 
         // Execute the method to test
-        List<Forecast> results = forecastRepository.findAllByDate("2024-10-03");
+        Optional<Forecast> result = forecastRepository.findByDate("2024-10-03");
 
         // Verify the results
-        assertThat(results).hasSize(1); // Expecting 2 forecasts for this date
+        assertTrue(result.isPresent());
     }
 
 }

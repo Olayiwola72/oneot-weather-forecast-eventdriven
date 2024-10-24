@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Repository interface for Forecast entities.
@@ -27,12 +28,19 @@ public interface ForecastRepository extends JpaRepository<Forecast, Long> {
             "WHERE p_day.name = :place OR p_night.name = :place")
     List<Forecast> findAllByPlace(@Param("place") String place);
 
+
     /**
-     * Finds all forecasts for the current day.
+     * Finds a forecast for a specific date.
      *
-     * @param currentDate The current date (in yyyy-MM-dd format).
-     * @return A list of forecasts valid for today.
+     * This method retrieves a forecast entity that matches the provided date.
+     * If no forecast exists for the given date, an empty Optional is returned.
+     *
+     * @param currentDate The date for which the forecast is to be retrieved, 
+     *                    formatted as yyyy-MM-dd.
+     * @return An Optional containing the matching Forecast entity if found, 
+     *         or an empty Optional if no forecast exists for the specified date.
      */
-    List<Forecast> findAllByDate(String currentDate);
+    Optional<Forecast> findByDate(String currentDate);
+    
 }
 

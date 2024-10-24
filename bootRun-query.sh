@@ -1,0 +1,1 @@
+./gradlew :query-microservice:bootRun

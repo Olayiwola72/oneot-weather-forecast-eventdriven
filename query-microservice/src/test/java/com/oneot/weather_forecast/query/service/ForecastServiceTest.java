@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -84,16 +85,14 @@ class ForecastServiceTest {
     @Test
     public void testGetTodayForecasts() {
         // Set other properties as needed
-        List<Forecast> forecasts = Collections.singletonList(forecast1); // Mocked response
-        when(forecastRepository.findAllByDate(today)).thenReturn(forecasts); // Mock repository method
+        when(forecastRepository.findByDate(today)).thenReturn(Optional.of(forecast1)); // Mock repository method
 
         // When
-        List<Forecast> result = forecastService.getTodayForecasts(); // Call the service method
+        Optional<Forecast> result = forecastService.getTodayForecast(); // Call the service method
 
         // Then
         assertThat(result).isNotNull(); // Check that the result is not null
-        assertThat(result).hasSize(1); // Check that the result size is as expected
-        assertThat(result).containsExactly(forecast1); // Check the contents
+        assertThat(result).isPresent(); // Check the contents
     }
     
 }
