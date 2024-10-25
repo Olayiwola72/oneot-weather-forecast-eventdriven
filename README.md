@@ -1,21 +1,17 @@
-# ***REST API Weather Forcast Application**
+# **REST API Weather Forcast Application**
 This project is a Gradle multi-module Spring Boot application that fetches weather forecast data from the 
 <a href="http://www.ilmateenistus.ee/ilma_andmed/xml/forecast.php?lang=eng" target="_blank">Estonian XML Weather Service API</a>. It consists of two independent modules that can run as separate applications:
 
-Module 1 - Write Microservice: A scheduled service that fetches weather data from a public XML API every 30 minutes and stores it in a PostgreSQL database.
-
-Module 2 - Query Microservice Web API: A REST API service that allows users to query the weather forecast for specific locations or retrieve the day’s forecast for all available locations.
+- **Module 1 - Write Microservice:** A scheduled service that fetches weather data from a public XML API every 30 minutes and stores it in a PostgreSQL database.
+- **Module 2 - Query Microservice Web API:** A REST API service that allows users to query the weather forecast for specific locations or retrieve the day’s forecast for all available locations.
 
 A third module exists to store common configurations or utility functions shared by the two primary modules.
 
 ## **🔭 Table of Contents**
 - [Project Overview](#-project-overview)
-- [Demo](#demo)
 - [Tech Stack](#-tech-stack)
 - [Getting Started](#-getting-started)
 - [Usage Instructions](#usage-instructions)
-- [API Documentation](#-api-documentation)
-- [Features](#features)
 - [Testing](#testing)
 - [Docker Support](#docker-support)
 - [Contributing](#contributing)
@@ -26,15 +22,15 @@ A third module exists to store common configurations or utility functions shared
 - Module 1 - Background Process
 This service fetches weather data from the Estonian Weather Service API, parses it (excluding wind and sea data), and saves the forecast in a PostgreSQL database.
 
-Database Setup: On startup, the module will automatically set up the required database schema if it does not exist.
-Scheduled Task: The @Scheduled annotation is used to run a task every 30 minutes that retrieves and processes the latest forecast data.
+   Database Setup: On startup, the module will automatically set up the required database schema if it does not exist.
+   Scheduled Task: The @Scheduled annotation is used to run a task every 30 minutes that retrieves and processes the latest forecast data.
 
 - Module 2 - Query Microservice Web API
 The web module provides a REST API for querying forecast data:
 
-Endpoints:
-GET /forecast/{location}: Takes a location as input and returns the weather forecast for that specific location in JSON format.
-GET /forecast/today: Returns the current day's forecast for all locations in JSON format.
+   Endpoints:
+   GET /forecast/{location}: Takes a location as input and returns the weather forecast for that specific location in JSON format.
+   GET /forecast/today: Returns the current day's forecast for all locations in JSON format.
 
 Response Structure: Each response includes location, date, temperature, and relevant weather details to make it as user-friendly as possible.
 
