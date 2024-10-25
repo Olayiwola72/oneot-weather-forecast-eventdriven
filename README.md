@@ -48,7 +48,7 @@ Response Structure: Each response includes location, date, temperature, and rele
 - **![](https://img.shields.io/badge/Code-Spring_JPA-informational?style=flat&logo=Spring-JPA&color=CC342D)**
 - **![](https://img.shields.io/badge/Test-JUnit5-informational?style=flat&logo=JUnit5&color=003B57)**
 - **![](https://img.shields.io/badge/Tools-Maven-informational?style=flat&logo=Gradle&color=430098)**
-
+- **![](https://img.shields.io/badge/Tools-GitHub_Actions-informational?style=flat&logo=GitHub-Actions&color=181717)**
 
 ### **Database:**
 - **![](https://img.shields.io/badge/Code-PostgreSQL-informational?style=flat&logo=PostgreSQL&color=336791)**
