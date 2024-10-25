@@ -67,22 +67,6 @@ To set up the project locally:
       git clone https://github.com/Olayiwola72/oneot-weather-forcast
       ```
 
-1. **Environment Setup:**
-
-      Before building and running the project, create a .env file in the root of the project directory with the following contents to configure the database connection:
-
-      ```sh
-      # Database Name
-      SPRING_DATASOURCE_NAME=weather
-
-      # Database Configuration for SQL localhost
-      SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/${SPRING_DATASOURCE_NAME}
-      SPRING_DATASOURCE_USERNAME=weather
-      SPRING_DATASOURCE_PASSWORD=weather
-      ```
-
-      The application will use these environment variables to connect to the PostgreSQL database. This is because it leverages paulschwarz:spring-dotenv library for environment variables management.
-
 1. **Build and Run:**
 
    - Build the Project:
@@ -149,6 +133,22 @@ This project can deployed using Docker and Docker Compose, which simplifies the 
 
       ```sh
       git clone https://github.com/Olayiwola72/oneot-weather-forcast
+
+1. **Environment Setup:**
+
+      Create a .env file in the root of the project directory with the following contents to configure the database connection:
+
+      ```sh
+      # Database Name
+      SPRING_DATASOURCE_NAME=weather
+
+      # Database Configuration for SQL localhost
+      SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/${SPRING_DATASOURCE_NAME}
+      SPRING_DATASOURCE_USERNAME=weather
+      SPRING_DATASOURCE_PASSWORD=weather
+      ```
+
+      The application will use these environment variables to connect to the PostgreSQL database. This is because it leverages paulschwarz:spring-dotenv library for environment variables management.
 
 1. **Build and Start the Application::**
 
