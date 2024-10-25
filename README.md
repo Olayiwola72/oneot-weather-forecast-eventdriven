@@ -14,6 +14,7 @@ A third module exists to store common configurations or utility functions shared
 - [Usage Instructions](#usage-instructions)
 - [Testing](#testing)
 - [Docker Support](#docker-support)
+- [Configuration](#-configuration)
 - [Contributing](#contributing)
 - [License](#license)
 - [Connect With Me](#-connect-with-me)
@@ -29,11 +30,16 @@ This service fetches weather data from the Estonian Weather Service API, parses 
 The web module provides a REST API for querying forecast data:
 
       Endpoints:
-      GET /forecast/{location}: Takes a location as input and returns the weather forecast for that specific location in JSON format.
-      GET /forecast/today: Returns the current day's forecast for all locations in JSON format.
+      GET /api/forecasts/places?place={place}: Takes a location as input and returns the weather forecast for that specific location in JSON format.
+      GET /api/forecasts/today: Returns the current day's forecast for all locations in JSON format.
 
 Response Structure: Each response includes location, date, temperature, and relevant weather details to make it as user-friendly as possible.
 
+## **🌱 Architecture Diagram**
+   ![ERD](https://github.com/Olayiwola72/oneot-weather-forcast/blob/main/documents/REST%20Weather%20Application%20Architecture.png)
+
+## **🌱 ER Diagram**
+   ![Architecture](https://github.com/Olayiwola72/oneot-weather-forcast/blob/main/documents/ERD%20Diagram.png)
 
 ## **💼 Tech Stack**
 - **![](https://img.shields.io/badge/Code-Spring_Boot-informational?style=flat&logo=Spring-Boot&color=DB7093)**
@@ -43,12 +49,12 @@ Response Structure: Each response includes location, date, temperature, and rele
 
 
 ### **Database:**
-- **![](https://img.shields.io/badge/Code-MySQL-informational?style=flat&logo=PostgreSQL&color=336791)**
+- **![](https://img.shields.io/badge/Code-PostgreSQL-informational?style=flat&logo=PostgreSQL&color=336791)**
 
 ## **🔧 Getting Started**
 To set up the project locally:
 
-Prerequisites
+🛠 Prerequisites
 - Java 17 (or later)
 - PostgreSQL (configured with the specified database and user details)
 - Gradle (or use the included Gradle wrapper)
@@ -113,7 +119,7 @@ Alternatively, you can access the Web API
    - Get the current day's forecast for all locations:
       
       ```sh
-      GET http://localhost:8093/api/forecast/today
+      GET http://localhost:8093/api/forecasts/today
       ```
 
 ## **Testing**
@@ -153,7 +159,7 @@ This project can deployed using Docker and Docker Compose, which simplifies the 
    **Note:** --build forces Docker Compose to rebuild the images. You can omit this flag if you don't need to rebuild.
 
 
-1. **📜 Configuration:**
+**📜 Configuration**
 Both modules use application-specific configuration files under src/main/resources/application.properties for database settings, scheduling intervals, and server ports.
 
 Database Configuration: Modify PostgreSQL connection details if necessary.
