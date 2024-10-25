@@ -1,4 +1,4 @@
-package com.oneot.weather_forecast.common.entity;
+package com.oneot.weather_forecast.common.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import jakarta.persistence.MappedSuperclass;

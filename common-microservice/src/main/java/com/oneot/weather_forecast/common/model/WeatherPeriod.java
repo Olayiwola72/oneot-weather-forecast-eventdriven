@@ -1,4 +1,4 @@
-package com.oneot.weather_forecast.common.entity;
+package com.oneot.weather_forecast.common.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Represents a weather period, which could be either day or night.
- * This entity extends WeatherAttributes to include additional specific information for a time period.
+ * This model extends WeatherAttributes to include additional specific information for a time period.
  */
 @MappedSuperclass
 @NoArgsConstructor

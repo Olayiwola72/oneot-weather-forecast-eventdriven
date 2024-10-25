@@ -1,11 +1,10 @@
 package com.oneot.weather_forecast.query.service;
 
-import com.oneot.weather_forecast.common.entity.Day;
-import com.oneot.weather_forecast.common.entity.Forecast;
-import com.oneot.weather_forecast.common.entity.Night;
-import com.oneot.weather_forecast.common.entity.Place;
+import com.oneot.weather_forecast.common.model.Day;
+import com.oneot.weather_forecast.common.model.Forecast;
+import com.oneot.weather_forecast.common.model.Night;
+import com.oneot.weather_forecast.common.model.Place;
 import com.oneot.weather_forecast.common.repository.ForecastRepository;
-import com.oneot.weather_forecast.query.service.ForecastService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

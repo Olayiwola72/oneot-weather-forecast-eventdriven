@@ -1,6 +1,6 @@
 package com.oneot.weather_forecast.query.controller;
 
-import com.oneot.weather_forecast.common.entity.Forecast;
+import com.oneot.weather_forecast.common.model.Forecast;
 import com.oneot.weather_forecast.query.dto.response.ForecastResponse;
 import com.oneot.weather_forecast.query.dto.response.ForecastResponseMapper;
 import com.oneot.weather_forecast.query.service.ForecastService;

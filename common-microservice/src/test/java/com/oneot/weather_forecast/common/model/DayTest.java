@@ -1,9 +1,8 @@
-package com.oneot.weather_forecast.common.entity;
+package com.oneot.weather_forecast.common.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

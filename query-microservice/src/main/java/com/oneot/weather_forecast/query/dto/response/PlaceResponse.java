@@ -1,6 +1,6 @@
 package com.oneot.weather_forecast.query.dto.response;
 
-import com.oneot.weather_forecast.common.entity.Place;
+import com.oneot.weather_forecast.common.model.Place;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,9 +32,9 @@ public class PlaceResponse {
     private Integer tempMax;
 
     /**
-     * Converts a Place entity to PlaceResponse.
+     * Converts a Place model to PlaceResponse.
      *
-     * @param place The Place entity to convert.
+     * @param place The Place model to convert.
      * @return A PlaceResponse DTO.
      */
     public static PlaceResponse fromEntity(Place place) {

@@ -1,4 +1,4 @@
-package com.oneot.weather_forecast.common.entity;
+package com.oneot.weather_forecast.common.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

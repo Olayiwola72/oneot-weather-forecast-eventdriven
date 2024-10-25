@@ -1,6 +1,6 @@
 package com.oneot.weather_forecast.query.dto.response;
 
-import com.oneot.weather_forecast.common.entity.Forecast;
+import com.oneot.weather_forecast.common.model.Forecast;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import java.util.List;
 public interface ForecastResponseMapper {
 
     /**
-     * Converts a Forecast entity to a ForecastResponse DTO.
+     * Converts a Forecast model to a ForecastResponse DTO.
      *
-     * @param forecast The Forecast entity to be converted.
+     * @param forecast The Forecast model to be converted.
      * @return A ForecastResponse DTO representing the forecast data.
      */
     ForecastResponse toForecastResponse(Forecast forecast);

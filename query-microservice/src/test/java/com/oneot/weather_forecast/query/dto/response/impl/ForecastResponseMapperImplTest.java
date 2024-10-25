@@ -1,12 +1,11 @@
 package com.oneot.weather_forecast.query.dto.response.impl;
 
-import com.oneot.weather_forecast.common.entity.Day;
-import com.oneot.weather_forecast.common.entity.Forecast;
-import com.oneot.weather_forecast.common.entity.Night;
+import com.oneot.weather_forecast.common.model.Day;
+import com.oneot.weather_forecast.common.model.Forecast;
+import com.oneot.weather_forecast.common.model.Night;
 import com.oneot.weather_forecast.query.dto.response.ForecastResponse;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,16 +16,16 @@ public class ForecastResponseMapperImplTest {
     private final ForecastResponseMapperImpl mapper = new ForecastResponseMapperImpl();
 
     /**
-     * Test the conversion of a single Forecast entity to a ForecastResponse DTO.
+     * Test the conversion of a single Forecast model to a ForecastResponse DTO.
      */
     @Test
     public void testToForecastResponse() {
-        // Create a mock Forecast entity
+        // Create a mock Forecast model
         Day day = new Day();
         Night night = new Night();
         Forecast forecast = new Forecast("2024-01-01", day, night);
 
-        // Convert the Forecast entity to a ForecastResponse DTO
+        // Convert the Forecast model to a ForecastResponse DTO
         ForecastResponse response = mapper.toForecastResponse(forecast);
 
         // Verify that the fields are set correctly
@@ -55,7 +54,7 @@ public class ForecastResponseMapperImplTest {
         // Verify that the size of the response list matches the input list
         assertEquals(forecasts.size(), responses.size());
 
-        // Verify that each ForecastResponse corresponds to the correct Forecast entity
+        // Verify that each ForecastResponse corresponds to the correct Forecast model
         for (int i = 0; i < forecasts.size(); i++) {
             assertEquals(forecasts.get(i).getDate(), responses.get(i).getDate());
         }

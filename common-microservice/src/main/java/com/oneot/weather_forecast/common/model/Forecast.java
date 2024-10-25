@@ -1,4 +1,4 @@
-package com.oneot.weather_forecast.common.entity;
+package com.oneot.weather_forecast.common.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -8,7 +8,7 @@ import lombok.Setter;
 
 /**
  * Represents a complete weather forecast for a specific date.
- * This entity encapsulates all weather-related information for a given day,
+ * This model encapsulates all weather-related information for a given day,
  * including day and night forecasts, specific place forecasts, and Peipsi.
  */
 @Entity

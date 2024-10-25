@@ -1,7 +1,7 @@
 package com.oneot.weather_forecast.query.dto.response;
 
-import com.oneot.weather_forecast.common.entity.Day;
-import com.oneot.weather_forecast.common.entity.Place;
+import com.oneot.weather_forecast.common.model.Day;
+import com.oneot.weather_forecast.common.model.Place;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -11,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DayResponseTest {
 
     /**
-     * Test the creation of a DayResponse instance from a Day entity.
+     * Test the creation of a DayResponse instance from a Day model.
      */
     @Test
     public void testFromEntity() {
-        // Create a mock Day entity
+        // Create a mock Day model
         String phenomenon = "Clear";
         int tempMin = 10;
         int tempMax = 15;
@@ -26,7 +26,7 @@ public class DayResponseTest {
         String peipsi = "Calm waters";
         Day day = new Day(phenomenon, tempMin, tempMax, text, places, peipsi);
 
-        // Convert the Day entity to a DayResponse DTO
+        // Convert the Day model to a DayResponse DTO
         DayResponse dayResponse = DayResponse.fromEntity(day);
 
         // Verify that the fields are set correctly

@@ -1,8 +1,7 @@
-package com.oneot.weather_forecast.common.entity;
+package com.oneot.weather_forecast.common.model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,7 @@ import lombok.Setter;
 
 /**
  * Represents a geographical place with weather attributes.
- * This entity extends WeatherAttributes to include location-specific information.
+ * This model extends WeatherAttributes to include location-specific information.
  */
 @Entity
 @NoArgsConstructor

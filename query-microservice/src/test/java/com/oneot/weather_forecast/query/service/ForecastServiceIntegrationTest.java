@@ -1,9 +1,9 @@
 package com.oneot.weather_forecast.query.service;
 
-import com.oneot.weather_forecast.common.entity.Day;
-import com.oneot.weather_forecast.common.entity.Forecast;
-import com.oneot.weather_forecast.common.entity.Night;
-import com.oneot.weather_forecast.common.entity.Place;
+import com.oneot.weather_forecast.common.model.Day;
+import com.oneot.weather_forecast.common.model.Forecast;
+import com.oneot.weather_forecast.common.model.Night;
+import com.oneot.weather_forecast.common.model.Place;
 import com.oneot.weather_forecast.common.repository.ForecastRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

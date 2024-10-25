@@ -1,4 +1,4 @@
-package com.oneot.weather_forecast.common.entity;
+package com.oneot.weather_forecast.common.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

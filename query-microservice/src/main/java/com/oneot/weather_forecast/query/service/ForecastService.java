@@ -1,13 +1,7 @@
 package com.oneot.weather_forecast.query.service;
 
-import com.oneot.weather_forecast.common.entity.Forecast;
+import com.oneot.weather_forecast.common.model.Forecast;
 import com.oneot.weather_forecast.common.repository.ForecastRepository;
-import com.oneot.weather_forecast.query.dto.response.ForecastResponse;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

@@ -111,27 +111,6 @@ class GlobalExceptionHandlerTest {
         assertNull(response.getBody().getErrors().get(0).getFieldName());
     }
 
-//    @Test
-//    void testHandleConstraintViolationException() {
-//        // Mock ConstraintViolationException and its constraint violations
-//        ConstraintViolationException exception = mock(ConstraintViolationException.class);
-//
-//        // Mock a set of constraint violations
-//        Set<ConstraintViolation<?>> constraintViolations = new HashSet<>();
-//        constraintViolations.add(mockConstraintViolation("Validation message 1", "field1"));
-//        constraintViolations.add(mockConstraintViolation("Validation message 2", "field2"));
-//
-//        // Define behavior for the mocked exception
-//        when(exception.getConstraintViolations()).thenReturn(constraintViolations);
-//
-//        // Invoke the handler method
-//        ResponseEntity<ErrorResponse> response = exceptionHandler.handleConstraintViolationException(exception);
-//
-//        // Assertions
-//        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-//        assertEquals(2, response.getBody().getErrors().size());
-//    }
-
     // Helper method to mock a ConstraintViolation
     // Correct way to mock ConstraintViolation getPropertyPath() method
     private ConstraintViolation<?> mockConstraintViolation(String message, String fieldName) {

@@ -1,10 +1,10 @@
 package com.oneot.weather_forecast.query.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oneot.weather_forecast.common.entity.Day;
-import com.oneot.weather_forecast.common.entity.Forecast;
-import com.oneot.weather_forecast.common.entity.Night;
-import com.oneot.weather_forecast.common.entity.Place;
+import com.oneot.weather_forecast.common.model.Day;
+import com.oneot.weather_forecast.common.model.Forecast;
+import com.oneot.weather_forecast.common.model.Night;
+import com.oneot.weather_forecast.common.model.Place;
 import com.oneot.weather_forecast.common.repository.ForecastRepository;
 import com.oneot.weather_forecast.query.config.RouteConfig;
 import com.oneot.weather_forecast.query.service.ForecastService;

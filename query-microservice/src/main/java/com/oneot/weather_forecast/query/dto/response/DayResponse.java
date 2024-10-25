@@ -1,6 +1,6 @@
 package com.oneot.weather_forecast.query.dto.response;
 
-import com.oneot.weather_forecast.common.entity.Day;
+import com.oneot.weather_forecast.common.model.Day;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -55,10 +55,10 @@ public class DayResponse {
     private String peipsi;
 
     /**
-     * Constructs a DayResponse from the Day entity.
+     * Constructs a DayResponse from the Day model.
      *
-     * @param day The Day entity to map.
-     * @return A new instance of DayResponse populated with the Day entity data.
+     * @param day The Day model to map.
+     * @return A new instance of DayResponse populated with the Day model data.
      */
     public static DayResponse fromEntity(Day day) {
         return new DayResponse(

@@ -1,6 +1,6 @@
 package com.oneot.weather_forecast.query.dto.response;
 
-import com.oneot.weather_forecast.common.entity.Night;
+import com.oneot.weather_forecast.common.model.Night;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -55,10 +55,10 @@ public class NightResponse {
     private String peipsi;
 
     /**
-     * Constructs a NightResponse from the Night entity.
+     * Constructs a NightResponse from the Night model.
      *
-     * @param night The Night entity to map.
-     * @return A new instance of NightResponse populated with the Night entity data.
+     * @param night The Night model to map.
+     * @return A new instance of NightResponse populated with the Night model data.
      */
     public static NightResponse fromEntity(Night night) {
         return new NightResponse(

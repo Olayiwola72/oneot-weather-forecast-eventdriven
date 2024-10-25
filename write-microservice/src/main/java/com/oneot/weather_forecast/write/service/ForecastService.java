@@ -1,6 +1,6 @@
 package com.oneot.weather_forecast.write.service;
 
-import com.oneot.weather_forecast.common.entity.Forecast;
+import com.oneot.weather_forecast.common.model.Forecast;
 import com.oneot.weather_forecast.common.repository.ForecastRepository;
 import com.oneot.weather_forecast.write.dto.ForecastResponse;
 import org.springframework.scheduling.annotation.Scheduled;

@@ -1,6 +1,6 @@
 package com.oneot.weather_forecast.common.repository;
 
-import com.oneot.weather_forecast.common.entity.Forecast;
+import com.oneot.weather_forecast.common.model.Forecast;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,12 +32,12 @@ public interface ForecastRepository extends JpaRepository<Forecast, Long> {
     /**
      * Finds a forecast for a specific date.
      *
-     * This method retrieves a forecast entity that matches the provided date.
+     * This method retrieves a forecast model that matches the provided date.
      * If no forecast exists for the given date, an empty Optional is returned.
      *
      * @param currentDate The date for which the forecast is to be retrieved, 
      *                    formatted as yyyy-MM-dd.
-     * @return An Optional containing the matching Forecast entity if found, 
+     * @return An Optional containing the matching Forecast model if found,
      *         or an empty Optional if no forecast exists for the specified date.
      */
     Optional<Forecast> findByDate(String currentDate);
