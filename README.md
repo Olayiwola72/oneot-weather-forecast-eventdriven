@@ -118,13 +118,9 @@ To run the tests locally:
 ## **Docker Support**
 This project can deployed using Docker and Docker Compose, which simplifies the process of setting up and running the application in a containerized environment. Follow these instructions to get the application running using Docker.
 
-<br/>
-
 🛠 Prerequisites
 - **Docker: Install Docker**
 - **Docker Compose: Install Docker Compose**
-
-<br/>
 
 🚀 Quick Start
 1. **Clone the Repository:**
