@@ -161,7 +161,7 @@ This project can deployed using Docker and Docker Compose, which simplifies the 
    **Note:** --build forces Docker Compose to rebuild the images. You can omit this flag if you don't need to rebuild.
 
 
-**📜 Configuration**
+## **📜 Configuration**
 Both modules use application-specific configuration files under src/main/resources/application.properties for database settings, scheduling intervals, and server ports.
 
 Database Configuration: Modify PostgreSQL connection details if necessary.
