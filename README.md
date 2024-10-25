@@ -9,6 +9,8 @@ A third module exists to store common configurations or utility functions shared
 
 ## **🔭 Table of Contents**
 - [Project Overview](#-project-overview)
+- [Architecture Diagram](#architecture-diagram)
+- [ER Diagram](#er-Diagram)
 - [Tech Stack](#-tech-stack)
 - [Getting Started](#-getting-started)
 - [Usage Instructions](#usage-instructions)
@@ -35,11 +37,11 @@ The web module provides a REST API for querying forecast data:
 
 Response Structure: Each response includes location, date, temperature, and relevant weather details to make it as user-friendly as possible.
 
-## **🌱 Architecture Diagram**
-   ![ERD](https://github.com/Olayiwola72/oneot-weather-forcast/blob/main/documents/REST%20Weather%20Application%20Architecture.png)
+## **Architecture Diagram**
+<img src="https://github.com/Olayiwola72/oneot-weather-forcast/blob/main/documents/REST%20Weather%20Application%20Architecture.png" alt="Architecture Diagram" width="300"/>
 
-## **🌱 ER Diagram**
-   ![Architecture](https://github.com/Olayiwola72/oneot-weather-forcast/blob/main/documents/ERD%20Diagram.png)
+## **ER Diagram**
+<img src="https://github.com/Olayiwola72/oneot-weather-forcast/blob/main/documents/ERD%20Diagram.png" alt="ER Diagram" width="300"/>
 
 ## **💼 Tech Stack**
 - **![](https://img.shields.io/badge/Code-Spring_Boot-informational?style=flat&logo=Spring-Boot&color=DB7093)**
