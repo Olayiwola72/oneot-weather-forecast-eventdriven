@@ -29,7 +29,6 @@ class ForecastServiceIntegrationTest {
 
     private String place;
     private String today;
-    private List<Forecast> forecasts;
 
     @BeforeEach
     void setUp() {

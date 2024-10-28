@@ -1,13 +1,11 @@
 package com.oneot.weather_forecast.query.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oneot.weather_forecast.common.model.Day;
 import com.oneot.weather_forecast.common.model.Forecast;
 import com.oneot.weather_forecast.common.model.Night;
 import com.oneot.weather_forecast.common.model.Place;
 import com.oneot.weather_forecast.common.repository.ForecastRepository;
 import com.oneot.weather_forecast.query.config.RouteConfig;
-import com.oneot.weather_forecast.query.service.ForecastService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,17 +35,10 @@ class ForecastControllerTest {
     private MockMvc mockMvc; // MockMvc to perform requests
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private ForecastService forecastService; // Inject the ForecastService
-
-    @Autowired
     private RouteConfig routeConfig;
 
     private String place;
     private String today;
-    private List<Forecast> forecasts;
 
     @BeforeEach
     void setUp() {

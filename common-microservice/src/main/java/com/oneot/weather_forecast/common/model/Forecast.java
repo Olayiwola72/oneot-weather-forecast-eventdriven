@@ -32,14 +32,16 @@ public class Forecast {
 
     /**
      * The daytime weather forecast.
+     * orphanRemoval = true - delete day if forecast is deleted or if the reference is removed
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Day day;
 
     /**
      * The nighttime weather forecast.
+     * orphanRemoval = true - delete night if forecast is deleted or if the reference is removed
      */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true) // 
     private Night night;
 
     /**
