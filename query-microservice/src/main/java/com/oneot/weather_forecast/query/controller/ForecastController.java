@@ -88,13 +88,13 @@ public class ForecastController {
     public ResponseEntity<ForecastResponse> getTodayForecast() {
         Forecast forecast = null;
         Optional<Forecast> forecastOptional = forecastService.getTodayForecast();  // Fetch today's forecast using the service
+
         if(forecastOptional.isPresent()){
             forecast = forecastOptional.get();
         }
 
         ForecastResponse forecastResponse = forecastResponseMapper.toForecastResponse(forecast);
-
         return ResponseEntity.ok(forecastResponse); // Return ResponseEntity with today's forecast
     }
-    
+
 }

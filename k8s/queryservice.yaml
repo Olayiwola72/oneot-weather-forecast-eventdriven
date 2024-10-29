@@ -1,0 +1,67 @@
+# Deployment & Service in 1 file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queryservice-deployment
+  labels:
+    app: queryservice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: queryservice
+  template:
+    metadata:
+      labels:
+        app: queryservice
+    spec:
+      containers:
+      - name: queryservice
+        image: olayiwola/weather-forecast-query-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8093
+        env:
+          - name: SPRING_DATASOURCE_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: postgresql-secret
+                key: POSTGRES_USER
+          - name: SPRING_DATASOURCE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgresql-secret
+                key: POSTGRES_PASSWORD
+          - name: SPRING_DATASOURCE_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: postgresql-config
+                key: postgresql-database
+          - name: SPRING_DATASOURCE_URL
+            value: jdbc:postgresql://postgresql-service:5432/$(SPRING_DATASOURCE_NAME)
+          - name: SPRING_PROFILES_ACTIVE
+            valueFrom:
+              configMapKeyRef:
+                name: postgresql-config
+                key: app-profile
+        resources:
+          requests:
+            memory: "256Mi"  # Adjust as necessary
+            cpu: "500m"      # Adjust as necessary
+          limits:
+            memory: "512Mi"  # Adjust as necessary
+            cpu: "1"         # Adjust as necessary
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: queryservice-service
+spec:
+  type: LoadBalancer # external type service, defualt is ClusterIP (internal service)
+  selector:
+    app: queryservice
+  ports:
+    - protocol: TCP
+      port: 8093
+      targetPort: 8093 #Same as containerPort

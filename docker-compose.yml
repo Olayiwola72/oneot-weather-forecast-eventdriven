@@ -11,40 +11,40 @@ services:
     ports:
       - 5432:5432  #HOST:CONTAINER
 
-  adminer:
-    image: adminer
-    hostname: adminer
-    container_name: adminer
-    restart: always
-    depends_on:
-      - db
-    ports:
-      - 8081:8081
+  # adminer:
+  #   image: adminer
+  #   hostname: adminer
+  #   container_name: adminer
+  #   restart: always
+  #   depends_on:
+  #     - db
+  #   ports:
+  #     - 8081:8081
 
-  query-service:
-    build:
-      context: ./
-      dockerfile: query.Dockerfile
-    ports:
-      - "8093:8093"
-    environment:
-      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME} 
-      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      SPRING_PROFILES_ACTIVE: prod # set profile
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${SPRING_DATASOURCE_NAME}
-    depends_on:
-      - db
+  # query-service:
+  #   build:
+  #     context: ./
+  #     dockerfile: query.Dockerfile
+  #   ports:
+  #     - "8093:8093"
+  #   environment:
+  #     SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME} 
+  #     SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+  #     SPRING_PROFILES_ACTIVE: prod # set profile
+  #     SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${SPRING_DATASOURCE_NAME}
+  #   depends_on:
+  #     - db
 
-  write-service:
-    build:
-      context: ./
-      dockerfile: write.Dockerfile
-    ports:
-      - "8091:8091"
-    environment:
-      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME} 
-      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-      SPRING_PROFILES_ACTIVE: prod # set profile
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${SPRING_DATASOURCE_NAME}
-    depends_on:
-      - db
+  # write-service:
+  #   build:
+  #     context: ./
+  #     dockerfile: write.Dockerfile
+  #   ports:
+  #     - "8091:8091"
+  #   environment:
+  #     SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME} 
+  #     SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+  #     SPRING_PROFILES_ACTIVE: prod # set profile
+  #     SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${SPRING_DATASOURCE_NAME}
+  #   depends_on:
+  #     - db

@@ -25,6 +25,8 @@ public class ForecastResponseMapperImpl implements ForecastResponseMapper {
      */
     @Override
     public ForecastResponse toForecastResponse(Forecast forecast) {
+        if(forecast == null) return null;
+
         return new ForecastResponse(
                 forecast.getDate(), // Map the date from the Forecast model
                 DayResponse.fromEntity(forecast.getDay()), // Convert Day model to DayResponse DTO
