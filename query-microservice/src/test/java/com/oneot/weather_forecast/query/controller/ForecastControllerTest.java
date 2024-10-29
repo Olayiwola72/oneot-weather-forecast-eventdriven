@@ -82,21 +82,24 @@ class ForecastControllerTest {
 
     @Test
     void testGetAllForecastsByPlace() throws Exception {
-        // Perform a POST request to the /places endpoint using RouteConfig
-        mockMvc.perform(get(routeConfig.base() + routeConfig.places() + "?place="+place) // Use POST for the request
-                        .contentType(MediaType.APPLICATION_JSON)) // Set content type to JSON
+        // Perform a GET request to the /places endpoint
+        mockMvc.perform(get(routeConfig.base() + routeConfig.places() + "?place=" + place)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()) // Expect HTTP 200 OK
-                .andExpect(jsonPath("$", hasSize(1))); // Assert that the response size is 1
+                .andExpect(jsonPath("$.status").value(200)) // Assert status in the response wrapper
+                .andExpect(jsonPath("$.message").isNotEmpty()) // Assert message in not empty in the response wrapper
+                .andExpect(jsonPath("$.data", hasSize(1))); // Assert that the data array size is 1
     }
 
     @Test
     void testGetTodayForecast() throws Exception {
-
         // Perform a GET request to the /today endpoint
         mockMvc.perform(get(routeConfig.base() + routeConfig.today())
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()) // Expect HTTP 200 OK
-                .andExpect(jsonPath("$.date").value(today)); // Check the forecast's date. It must be today
+                .andExpect(jsonPath("$.status").value(200)) // Assert status in the response wrapper
+                .andExpect(jsonPath("$.message").isNotEmpty()) // Assert message in not empty in the response wrapper
+                .andExpect(jsonPath("$.data.date").value(today)); // Check the forecast's date in the data section. It must be today
     }
 
 }

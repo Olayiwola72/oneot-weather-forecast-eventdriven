@@ -1,6 +1,7 @@
 package com.oneot.weather_forecast.query.controller;
 
 import com.oneot.weather_forecast.common.model.Forecast;
+import com.oneot.weather_forecast.query.dto.response.ApiResponseWrapper;
 import com.oneot.weather_forecast.query.dto.response.ForecastResponse;
 import com.oneot.weather_forecast.query.dto.response.ForecastResponseMapper;
 import com.oneot.weather_forecast.query.service.ForecastService;
@@ -12,6 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -32,6 +35,7 @@ public class ForecastController {
 
     private final ForecastService forecastService; // Service to handle forecast logic
     private final ForecastResponseMapper forecastResponseMapper;
+    private final MessageSource messageSource;
 
     /**
      * Constructor for ForecastController.
@@ -40,10 +44,12 @@ public class ForecastController {
      */
     public ForecastController(
             ForecastService forecastService,
-            ForecastResponseMapper forecastResponseMapper
+            ForecastResponseMapper forecastResponseMapper,
+            MessageSource messageSource
     ) {
         this.forecastService = forecastService; // Initialize the forecast service
         this.forecastResponseMapper = forecastResponseMapper;
+        this.messageSource = messageSource;
     }
 
     /**
@@ -61,18 +67,22 @@ public class ForecastController {
             }),
     })
     @GetMapping(path = "${routes.api.places}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ForecastResponse>> getAllForecastsByPlace(
+    public ResponseEntity<ApiResponseWrapper<List<ForecastResponse>>> getAllForecastsByPlace(
             @Parameter(description = "Name of the place to retrieve forecasts for", example = "Harku")
             @RequestParam(name = "place", required = true)
-                    @NotBlank
-            String place // URL parameter 'place'
+            @NotBlank
+            String place
     ) {
-        List<Forecast> forecasts = forecastService.getAllForecastsByPlace(place); // Fetch forecasts using the service
+        List<Forecast> forecasts = forecastService.getAllForecastsByPlace(place);
 
         // Map the List<Forecast> to List<ForecastResponse>
         List<ForecastResponse> forecastResponses = forecastResponseMapper.toForecastResponseList(forecasts);
 
-        return ResponseEntity.ok(forecastResponses); // Return ResponseEntity with the mapped list
+        // Retrieve the message from messages.properties
+        String message = messageSource.getMessage("forecast.place.success", null, LocaleContextHolder.getLocale());
+
+        ApiResponseWrapper<List<ForecastResponse>> response = ApiResponseWrapper.success(message, forecastResponses);
+        return ResponseEntity.ok(response); // Return ResponseEntity with the mapped list
     }
 
     /**
@@ -85,16 +95,17 @@ public class ForecastController {
             @Content(mediaType = "application/json", schema = @Schema(implementation = ForecastResponse.class)) }),
     })
     @GetMapping(path = "${routes.api.today}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ForecastResponse> getTodayForecast() {
-        Forecast forecast = null;
-        Optional<Forecast> forecastOptional = forecastService.getTodayForecast();  // Fetch today's forecast using the service
+    public ResponseEntity<ApiResponseWrapper<ForecastResponse>> getTodayForecast() {
+        Optional<Forecast> forecastOptional = forecastService.getTodayForecast(); // Fetch today's forecast using the service
+        ForecastResponse forecastResponse = forecastOptional
+                .map(forecastResponseMapper::toForecastResponse)
+                .orElse(null);
 
-        if(forecastOptional.isPresent()){
-            forecast = forecastOptional.get();
-        }
+        // Retrieve the message from messages.properties
+        String message = messageSource.getMessage("forecast.retrieved.success", null, LocaleContextHolder.getLocale());
 
-        ForecastResponse forecastResponse = forecastResponseMapper.toForecastResponse(forecast);
-        return ResponseEntity.ok(forecastResponse); // Return ResponseEntity with today's forecast
+        ApiResponseWrapper<ForecastResponse> response = ApiResponseWrapper.success(message, forecastResponse);
+        return ResponseEntity.ok(response);
     }
 
 }
