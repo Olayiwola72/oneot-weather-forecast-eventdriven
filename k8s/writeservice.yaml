@@ -2,26 +2,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: queryservice-deployment
+  name: writeservice-deployment
   labels:
-    app: queryservice
+    app: writeservice
 spec:
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      app: queryservice
+      app: writeservice
   template:
     metadata:
       labels:
-        app: queryservice
+        app: writeservice
     spec:
       containers:
-      - name: queryservice
-        image: olayiwola/weather-forecast-query-service:latest
+      - name: writeservice
+        image: olayiwola/weather-forecast-write-service:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 8093
+        - containerPort: 8091
         env:
           - name: SPRING_DATASOURCE_USERNAME
             valueFrom:
@@ -57,12 +57,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: queryservice-service
+  name: writeservice-service
 spec:
-  type: LoadBalancer # external type service, defualt is ClusterIP (internal service)
+  type: ClusterIP # external type service, defualt is ClusterIP (internal service)
   selector:
-    app: queryservice
+    app: writeservice
   ports:
     - protocol: TCP
-      port: 8093
-      targetPort: 8093 #Same as containerPort
+      port: 8091
