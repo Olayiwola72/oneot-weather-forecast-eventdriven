@@ -73,28 +73,30 @@ public class GlobalExceptionHandler {
 			ErrorResponse errorResponse = new ErrorResponse();
 
 			 for(FieldError fieldError : fieldErrors) {
-				 String fieldName = fieldError.getField();
-				 String errorCode = fieldError.getCode();
-				 String errorMessage = fieldError.getDefaultMessage();
-				 Object rejectedValue = fieldError.getRejectedValue();
-				 if(rejectedValue != null) rejectedValue = rejectedValue.toString();
+				String fieldName = fieldError.getField();
+				String errorCode = fieldError.getCode();
+				String errorMessage = fieldError.getDefaultMessage();
+				Object rejectedValue = fieldError.getRejectedValue();
+				if(rejectedValue != null) rejectedValue = rejectedValue.toString();
 
-				 try{
-					 errorMessage = messageSource.getMessage(
-	 					errorCode,
-	 					new Object[]{
-							fieldName,
-							rejectedValue
-						},
-	 					LocaleContextHolder.getLocale()
-			 		);
-				 }catch(NoSuchMessageException ignored) {}
+				if(errorCode != null){
+					try{
+						errorMessage = messageSource.getMessage(
+							errorCode,
+							new Object[]{
+							   fieldName,
+							   rejectedValue
+						   },
+							LocaleContextHolder.getLocale()
+						);
+				   }catch(NoSuchMessageException ignored) {}
+				}
+				
+				ErrorField errorField = new ErrorField(errorMessage, fieldName);
+				errorResponse.addErrors(errorField);
+			}
 
-				 ErrorField errorField = new ErrorField(errorMessage, fieldName);
-				 errorResponse.addErrors(errorField);
-			 }
-
-			 return ResponseEntity.badRequest().body(errorResponse);
+			return ResponseEntity.badRequest().body(errorResponse);
 		}else if(result.hasGlobalErrors()){
 				ErrorResponse errorResponse = new ErrorResponse();
 

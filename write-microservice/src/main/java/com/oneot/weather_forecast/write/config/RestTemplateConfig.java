@@ -1,8 +1,13 @@
 package com.oneot.weather_forecast.write.config;
 
+import com.oneot.weather_forecast.write.interceptor.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.BufferingClientHttpRequestFactory;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 /**
  * Configuration class for setting up the RestTemplate.
@@ -21,7 +26,12 @@ public class RestTemplateConfig {
      */
     @Bean
     public RestTemplate restTemplate() {
-        return new RestTemplate();
+        // Set up RestTemplate with buffering to allow re-reading the response body
+        RestTemplate restTemplate = new RestTemplate(
+                new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
+
+        restTemplate.setInterceptors(List.of(new RequestInterceptor())); // Add custom the interceptor for logging
+        return restTemplate;
     }
-	
+    
 }
