@@ -3,6 +3,7 @@ package com.oneot.weather_forecast.write.interceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
@@ -44,8 +45,10 @@ public class RequestInterceptor implements ClientHttpRequestInterceptor {
     private void logRequest(HttpRequest request, byte[] body) {
         logger.info("Request Method: {}", request.getMethod());
         logger.info("Request URI: {}", request.getURI());
-        logger.info("Request Headers: {}", request.getHeaders());
-        logger.info("Request Body: {}", new String(body, StandardCharsets.UTF_8));
+        logHeaders(request.getHeaders());
+        if(body.length > 0){
+            logger.info("Request Body: {}", new String(body, StandardCharsets.UTF_8));
+        }
     }
 
     /**
@@ -56,8 +59,25 @@ public class RequestInterceptor implements ClientHttpRequestInterceptor {
      */
     private void logResponse(ClientHttpResponse response) throws IOException {
         logger.info("Response Status Code: {}", response.getStatusCode());
-        logger.info("Response Headers: {}", response.getHeaders());
-        logger.info("Response Body: {}", StreamUtils.copyToString(response.getBody(), StandardCharsets.UTF_8));
+        logHeaders(response.getHeaders());
+        
+        byte[] responseBody = response.getBody().readAllBytes();
+        if(responseBody.length > 0){
+            logger.info("Response Body: {}", new String(responseBody, StandardCharsets.UTF_8));
+        }
+    }
+    
+    /**
+     * Logs the HTTP headers.
+     *
+     * @param headers The HttpHeaders to be logged.
+     */
+    private void logHeaders(HttpHeaders headers){
+        if (headers != null) {
+            headers.forEach((name, values) ->
+                values.forEach(value -> logger.info("{}={}", name, value))
+            );
+        }
     }
 
 }
