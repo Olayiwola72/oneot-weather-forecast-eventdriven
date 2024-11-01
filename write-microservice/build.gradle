@@ -24,4 +24,5 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-aop' // Aspect-Oriented Programming for logging
 	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.13.0'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
