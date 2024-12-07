@@ -1,13 +1,17 @@
-package com.oneot.weather_forecast.common.repository;
+package com.oneot.weather_forecast.query.repository;
 
-import com.oneot.weather_forecast.common.CommonMicroserviceApplication;
-import com.oneot.weather_forecast.common.model.*;
+import com.oneot.weather_forecast.query.model.Day;
+import com.oneot.weather_forecast.query.model.Night;
+import com.oneot.weather_forecast.query.model.Place;
+import com.oneot.weather_forecast.query.model.QueryForecast;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +19,9 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DataJpaTest
+@DataMongoTest
 @ActiveProfiles("test")
-@ContextConfiguration(classes = CommonMicroserviceApplication.class)
+@ExtendWith(SpringExtension.class)
 class ForecastRepositoryTest {
 
     private String phenomenon;
@@ -45,10 +49,15 @@ class ForecastRepositoryTest {
         peipsi = "Southwest, west wind 4-8, in gusts up to 12 m/s.";
     }
 
+    @AfterEach
+    void tearDown() {
+        forecastRepository.deleteAll();
+    }
+
     @Test
     void testFindAllByPlace() {
         //Arrange
-        Forecast forecast = new Forecast(
+        QueryForecast forecast = new QueryForecast(
                 "2024-10-01",
                 new Day(phenomenon, tempMin, tempMax, text, places, peipsi),
                 new Night(phenomenon, tempMin, tempMax, text, places, peipsi)
@@ -56,7 +65,7 @@ class ForecastRepositoryTest {
         forecastRepository.save(forecast);
 
         // Execute the method to test
-        List<Forecast> results = forecastRepository.findAllByPlace(place);
+        List<QueryForecast> results = forecastRepository.findAllByPlace(place);
 
         // Verify the results
         assertThat(results).hasSize(1); // Expecting 1 forecasts for this place
@@ -65,7 +74,7 @@ class ForecastRepositoryTest {
     @Test
     void testFindByDate() {
         //Arrange
-        Forecast forecast = new Forecast(
+        QueryForecast forecast = new QueryForecast(
                 "2024-10-03",
                 new Day(phenomenon, tempMin, tempMax, text, places, peipsi),
                 new Night(phenomenon, tempMin, tempMax, text, places, peipsi)
@@ -73,7 +82,7 @@ class ForecastRepositoryTest {
         forecastRepository.save(forecast);
 
         // Execute the method to test
-        Optional<Forecast> result = forecastRepository.findByDate("2024-10-03");
+        Optional<QueryForecast> result = forecastRepository.findByDate("2024-10-03");
 
         // Verify the results
         assertTrue(result.isPresent());

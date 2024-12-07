@@ -16,37 +16,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @Schema(description = "Represents the nighttime weather forecast with detailed weather attributes.")
-public class NightResponse {
-
-    /**
-     * The weather phenomenon during the night (e.g., "Clear", "Cloudy", "Rainy").
-     */
-    @Schema(description = "The weather phenomenon during the night", example = "Clear", required = true)
-    private String phenomenon;
-
-    /**
-     * The minimum temperature expected during the night.
-     */
-    @Schema(description = "Minimum temperature expected during the night", example = "-5")
-    private Integer tempMin;
-
-    /**
-     * The maximum temperature expected during the night.
-     */
-    @Schema(description = "Maximum temperature expected during the night", example = "5")
-    private Integer tempMax;
-
-    /**
-     * Additional textual description of the night weather.
-     */
-    @Schema(description = "Additional textual description of the night weather", example = "Clear skies with a slight breeze.")
-    private String text;
-
-    /**
-     * List of places for which the night forecast applies.
-     */
-    @Schema(description = "List of places where the nighttime forecast is applicable")
-    private List<PlaceResponse> places;
+public class NightResponse extends WeatherPeriodResponse {
 
     /**
      * Specific weather information for Peipsi during the night, if applicable.
@@ -54,6 +24,11 @@ public class NightResponse {
     @Schema(description = "Specific weather information for Peipsi", example = "Calm waters.")
     private String peipsi;
 
+    public NightResponse(String phenomenon, Integer tempMin, Integer tempMax, String text, List<PlaceResponse> places, String peipsi) {
+        super(phenomenon, tempMin, tempMax, text, places);
+        this.peipsi = peipsi;
+    }
+    
     /**
      * Constructs a NightResponse from the Night model.
      *

@@ -1,15 +1,20 @@
 package com.oneot.weather_forecast.query.service;
 
-import com.oneot.weather_forecast.common.model.Day;
-import com.oneot.weather_forecast.common.model.Forecast;
-import com.oneot.weather_forecast.common.model.Night;
-import com.oneot.weather_forecast.common.model.Place;
-import com.oneot.weather_forecast.common.repository.ForecastRepository;
+import com.oneot.weather_forecast.query.model.Day;
+import com.oneot.weather_forecast.query.model.QueryForecast;
+import com.oneot.weather_forecast.query.model.Night;
+import com.oneot.weather_forecast.query.model.Place;
+import com.oneot.weather_forecast.query.repository.ForecastRepository;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,7 +23,10 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest // Load the full application context
-@ActiveProfiles("test") // Use the 'test' profile for testing
+@ActiveProfiles({
+        "dev",
+        "test"
+})
 class ForecastServiceIntegrationTest {
 
     @Autowired
@@ -28,19 +36,15 @@ class ForecastServiceIntegrationTest {
     private ForecastRepository forecastRepository; // Inject the repository to set up test data
 
     private String place;
-    private String today;
 
     @BeforeEach
     void setUp() {
-        // Clear the repository before each test
-        forecastRepository.deleteAll();
-
         // Setup test data
         String phenomenon = "Sunny";
         int tempMin = 15;
         int tempMax = 25;
         String text = "Clear sky";
-        today = LocalDate.now().toString(); // Get today's date
+        String today = LocalDate.now().toString(); // Get today's date
 
         place = "Tallinn";
 
@@ -50,30 +54,36 @@ class ForecastServiceIntegrationTest {
         String peipsi = "Southwest, west wind 4-8, in gusts up to 12 m/s.";
 
         // Create a forecast object for today
-        Forecast forecast1 = new Forecast(
+        QueryForecast queryForecast1 = new QueryForecast(
                 today, // Create a forecast object for today
                 new Day(phenomenon, tempMin, tempMax, text, places, peipsi),
                 new Night(phenomenon, tempMin, tempMax, text, places, peipsi)
         );
-        forecastRepository.save(forecast1);
+        forecastRepository.save(queryForecast1);
 
         places = List.of(
                 new Place("Lagos", "Sunny", 20, 10)
         );
 
-        Forecast forecast2 = new Forecast(
+        QueryForecast queryForecast2 = new QueryForecast(
                 "2024-10-02",
                 new Day(phenomenon, tempMin, tempMax, text, places, peipsi),
                 new Night(phenomenon, tempMin, tempMax, text, places, peipsi)
         );
 
-        forecastRepository.save(forecast2);
+        forecastRepository.save(queryForecast2);
+    }
+
+    @AfterEach
+    void cleanUp(){
+        // Clear the repository before each test
+        forecastRepository.deleteAll();
     }
 
     @Test
      void testGetAllForecastsByPlace() {
         // When
-        List<Forecast> result = forecastService.getAllForecastsByPlace(place);
+        List<QueryForecast> result = forecastService.getAllForecastsByPlace(place);
 
         // Then
         assertThat(result).isNotNull(); // Check that the result is not null
@@ -83,7 +93,7 @@ class ForecastServiceIntegrationTest {
     @Test
      void testGetTodayForecast() {
         // When
-        Optional<Forecast> result = forecastService.getTodayForecast();
+        Optional<QueryForecast> result = forecastService.getTodayForecast();
 
         // Then
         assertThat(result).isNotNull(); // Check that the result is not null

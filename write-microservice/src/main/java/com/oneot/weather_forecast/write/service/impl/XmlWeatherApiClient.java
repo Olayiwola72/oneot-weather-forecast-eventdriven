@@ -1,8 +1,9 @@
-package com.oneot.weather_forecast.write.service;
+package com.oneot.weather_forecast.write.service.impl;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.oneot.weather_forecast.write.config.WeatherApiProperties;
 import com.oneot.weather_forecast.write.dto.ForecastResponse;
+import com.oneot.weather_forecast.write.service.WeatherApiClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 

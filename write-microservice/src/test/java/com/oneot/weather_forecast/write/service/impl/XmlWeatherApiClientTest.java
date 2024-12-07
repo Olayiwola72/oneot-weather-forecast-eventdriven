@@ -1,4 +1,4 @@
-package com.oneot.weather_forecast.write.service;
+package com.oneot.weather_forecast.write.service.impl;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.oneot.weather_forecast.common.model.Day;

@@ -1,7 +1,7 @@
 package com.oneot.weather_forecast.query.dto.response;
 
-import com.oneot.weather_forecast.common.model.Night;
-import com.oneot.weather_forecast.common.model.Place;
+import com.oneot.weather_forecast.query.model.Night;
+import com.oneot.weather_forecast.query.model.Place;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

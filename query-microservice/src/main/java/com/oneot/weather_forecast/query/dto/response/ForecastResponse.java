@@ -1,6 +1,6 @@
 package com.oneot.weather_forecast.query.dto.response;
 
-import com.oneot.weather_forecast.common.model.Forecast;
+import com.oneot.weather_forecast.query.model.QueryForecast;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,16 +36,16 @@ public class ForecastResponse {
     private NightResponse night;
 
     /**
-     * Constructs a ForecastResponse from the Forecast model.
+     * Constructs a ForecastResponse from the QueryForecast model.
      *
-     * @param forecast The Forecast model to map.
-     * @return A new instance of ForecastResponse populated with the Forecast model data.
+     * @param queryForecast The QueryForecast model to map.
+     * @return A new instance of ForecastResponse populated with the QueryForecast model data.
      */
-    public static ForecastResponse fromEntity(Forecast forecast) {
+    public static ForecastResponse fromEntity(QueryForecast queryForecast) {
         return new ForecastResponse(
-                forecast.getDate(),
-                DayResponse.fromEntity(forecast.getDay()),
-                NightResponse.fromEntity(forecast.getNight())
+                queryForecast.getDate(),
+                DayResponse.fromEntity(queryForecast.getDay()),
+                NightResponse.fromEntity(queryForecast.getNight())
         );
     }
 }

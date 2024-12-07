@@ -11,6 +11,7 @@ import lombok.Setter;
  * This model encapsulates all weather-related information for a given day,
  * including day and night forecasts, specific place forecasts, and Peipsi.
  */
+@Table(name = "forecasts")
 @Entity
 @NoArgsConstructor
 @Getter

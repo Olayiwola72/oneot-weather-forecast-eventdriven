@@ -1,5 +1,8 @@
 package com.oneot.weather_forecast.common.model;
 
+import com.oneot.weather_forecast.common.model.Day;
+import com.oneot.weather_forecast.common.model.Night;
+import com.oneot.weather_forecast.common.model.Place;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

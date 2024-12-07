@@ -7,7 +7,6 @@ import java.util.Objects;
 import com.oneot.weather_forecast.common.dto.ErrorField;
 import com.oneot.weather_forecast.common.dto.ErrorResponse;
 import jakarta.validation.Path;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -171,32 +170,6 @@ public class GlobalExceptionHandler {
 
         // JsonParseException
 		ErrorResponse errorResponse = new ErrorResponse(messageSource.getMessage("json.invalid.format", null, LocaleContextHolder.getLocale()));
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-    }
-
-	/**
-	 * Handles ObjectNotFoundException.
-	 * This exception is thrown when a requested object is not found.
-	 * It constructs an ErrorResponse with a relevant error message.
-	 *
-	 * @param ex The ObjectNotFoundException that was thrown.
-	 * @return ResponseEntity containing the ErrorResponse and HTTP status 400 (BAD_REQUEST).
-	 */
-	@ExceptionHandler(ObjectNotFoundException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<ErrorResponse> handleObjectNotFoundException(ObjectNotFoundException ex) {
-		String entityName = ex.getEntityName();
-
-        String errorMessage = messageSource.getMessage(
-			"NotFound",
-			new Object[]{
-				entityName.substring(0, 1).toUpperCase() + entityName.substring(1),
-				ex.getIdentifier().toString()
-			},
-			LocaleContextHolder.getLocale()
-		);
-
-		ErrorResponse errorResponse = new ErrorResponse(errorMessage, "id");
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 

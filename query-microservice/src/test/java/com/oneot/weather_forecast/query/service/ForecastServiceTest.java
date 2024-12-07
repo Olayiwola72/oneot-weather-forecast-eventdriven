@@ -1,10 +1,10 @@
 package com.oneot.weather_forecast.query.service;
 
-import com.oneot.weather_forecast.common.model.Day;
-import com.oneot.weather_forecast.common.model.Forecast;
-import com.oneot.weather_forecast.common.model.Night;
-import com.oneot.weather_forecast.common.model.Place;
-import com.oneot.weather_forecast.common.repository.ForecastRepository;
+import com.oneot.weather_forecast.query.model.Day;
+import com.oneot.weather_forecast.query.model.QueryForecast;
+import com.oneot.weather_forecast.query.model.Night;
+import com.oneot.weather_forecast.query.model.Place;
+import com.oneot.weather_forecast.query.repository.ForecastRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -29,9 +29,9 @@ class ForecastServiceTest {
 
     private String place;
     private String today;
-    private Forecast forecast1;
-    private Forecast forecast2;
-    private List<Forecast> forecasts;
+    private QueryForecast queryForecast1;
+    private QueryForecast queryForecast2;
+    private List<QueryForecast> queryForecasts;
 
     @BeforeEach
     public void setUp() {
@@ -51,42 +51,42 @@ class ForecastServiceTest {
         );
         String peipsi = "Southwest, west wind 4-8, in gusts up to 12 m/s.";
 
-        forecast1 = new Forecast(
+        queryForecast1 = new QueryForecast(
                 today, // Create a forecast object for today
                 new Day(phenomenon, tempMin, tempMax, text, places, peipsi),
                 new Night(phenomenon, tempMin, tempMax, text, places, peipsi)
         );
 
-        forecast2 = new Forecast(
+        queryForecast2 = new QueryForecast(
                 "2024-10-02",
                 new Day(phenomenon, tempMin, tempMax, text, places, peipsi),
                 new Night(phenomenon, tempMin, tempMax, text, places, peipsi)
         );
 
-        forecasts = Arrays.asList(forecast1, forecast2);
+        queryForecasts = Arrays.asList(queryForecast1, queryForecast2);
     }
 
     @Test
     public void testGetAllForecastsByPlace() {
         // Given
-        when(forecastRepository.findAllByPlace(place)).thenReturn(forecasts); // Mock repository method
+        when(forecastRepository.findAllByPlace(place)).thenReturn(queryForecasts); // Mock repository method
 
         // When
-        List<Forecast> result = forecastService.getAllForecastsByPlace(place); // Call the service method
+        List<QueryForecast> result = forecastService.getAllForecastsByPlace(place); // Call the service method
 
         // Then
         assertThat(result).isNotNull(); // Check that the result is not null
         assertThat(result).hasSize(2); // Check that the result size is as expected
-        assertThat(result).containsExactlyInAnyOrder(forecast1, forecast2); // Check the contents
+        assertThat(result).containsExactlyInAnyOrder(queryForecast1, queryForecast2); // Check the contents
     }
 
     @Test
     public void testGetTodayForecasts() {
         // Set other properties as needed
-        when(forecastRepository.findByDate(today)).thenReturn(Optional.of(forecast1)); // Mock repository method
+        when(forecastRepository.findByDate(today)).thenReturn(Optional.of(queryForecast1)); // Mock repository method
 
         // When
-        Optional<Forecast> result = forecastService.getTodayForecast(); // Call the service method
+        Optional<QueryForecast> result = forecastService.getTodayForecast(); // Call the service method
 
         // Then
         assertThat(result).isNotNull(); // Check that the result is not null

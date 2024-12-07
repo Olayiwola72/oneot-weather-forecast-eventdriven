@@ -1,7 +1,7 @@
 package com.oneot.weather_forecast.query.service;
 
-import com.oneot.weather_forecast.common.model.Forecast;
-import com.oneot.weather_forecast.common.repository.ForecastRepository;
+import com.oneot.weather_forecast.query.model.QueryForecast;
+import com.oneot.weather_forecast.query.repository.ForecastRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -33,7 +33,7 @@ public class ForecastService {
      * @param place The location to search forecasts for.
      * @return A list of forecasts matching the place.
      */
-    public List<Forecast> getAllForecastsByPlace(String place) {
+    public List<QueryForecast> getAllForecastsByPlace(String place) {
         return forecastRepository.findAllByPlace(place); // Fetch forecasts from the repository
     }
 
@@ -42,7 +42,7 @@ public class ForecastService {
      *
      * @return A list of today's forecasts for all locations.
      */
-    public Optional<Forecast> getTodayForecast() {
+    public Optional<QueryForecast> getTodayForecast() {
         String today = LocalDate.now().toString(); // Get the current date in yyyy-MM-dd format
         return forecastRepository.findByDate(today);
     }

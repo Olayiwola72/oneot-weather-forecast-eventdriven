@@ -1,11 +1,12 @@
 package com.oneot.weather_forecast.query.controller;
 
-import com.oneot.weather_forecast.common.model.Day;
-import com.oneot.weather_forecast.common.model.Forecast;
-import com.oneot.weather_forecast.common.model.Night;
-import com.oneot.weather_forecast.common.model.Place;
-import com.oneot.weather_forecast.common.repository.ForecastRepository;
+import com.oneot.weather_forecast.query.model.Day;
+import com.oneot.weather_forecast.query.model.QueryForecast;
+import com.oneot.weather_forecast.query.model.Night;
+import com.oneot.weather_forecast.query.model.Place;
+import com.oneot.weather_forecast.query.repository.ForecastRepository;
 import com.oneot.weather_forecast.query.config.RouteConfig;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest // Load the full application context
-@ActiveProfiles("test") // Use the 'test' profile for testing
+@ActiveProfiles("test") // using 'test' profile
 @AutoConfigureMockMvc // Enable MockMvc
 class ForecastControllerTest {
 
@@ -42,9 +43,6 @@ class ForecastControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Clear the repository before each test
-        forecastRepository.deleteAll();
-
         // Test data setup
         String phenomenon = "Sunny";
         int tempMin = 15;
@@ -59,31 +57,36 @@ class ForecastControllerTest {
         String peipsi = "Southwest, west wind 4-8, in gusts up to 12 m/s.";
 
         // Create a forecast object for today
-        Forecast forecast1 = new Forecast(
+        QueryForecast queryForecast1 = new QueryForecast(
                 today, // Create a forecast object for today
                 new Day(phenomenon, tempMin, tempMax, text, places, peipsi),
                 new Night(phenomenon, tempMin, tempMax, text, places, peipsi)
         );
 
-        forecastRepository.save(forecast1);
+        forecastRepository.save(queryForecast1);
 
         places = List.of(
                 new Place("Lagos", "Sunny", 20, 10)
         );
 
-        Forecast forecast2 = new Forecast(
+        QueryForecast queryForecast2 = new QueryForecast(
                 "2022-10-24", // Create a forecast object for today
                 new Day(phenomenon, tempMin, tempMax, text, places, peipsi),
                 new Night(phenomenon, tempMin, tempMax, text, places, peipsi)
         );
 
-        forecastRepository.save(forecast2);
+        forecastRepository.save(queryForecast2);
+    }
+
+    @AfterEach
+    void tearDown() {
+        forecastRepository.deleteAll();
     }
 
     @Test
     void testGetAllForecastsByPlace() throws Exception {
         // Perform a GET request to the /places endpoint
-        mockMvc.perform(get(routeConfig.base() + routeConfig.places() + "?place=" + place)
+        mockMvc.perform(get(routeConfig.v1BaseUrl() + routeConfig.places() + "?place=" + place)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()) // Expect HTTP 200 OK
                 .andExpect(jsonPath("$.status").value(200)) // Assert status in the response wrapper
@@ -94,7 +97,7 @@ class ForecastControllerTest {
     @Test
     void testGetTodayForecast() throws Exception {
         // Perform a GET request to the /today endpoint
-        mockMvc.perform(get(routeConfig.base() + routeConfig.today())
+        mockMvc.perform(get(routeConfig.v1BaseUrl() + routeConfig.today())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()) // Expect HTTP 200 OK
                 .andExpect(jsonPath("$.status").value(200)) // Assert status in the response wrapper

@@ -10,7 +10,6 @@ import java.util.*;
 
 import com.oneot.weather_forecast.common.config.MessageSourceConfig;
 import com.oneot.weather_forecast.common.dto.ErrorResponse;
-import org.hibernate.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -152,35 +151,6 @@ class GlobalExceptionHandlerTest {
             response.getBody().getErrors().get(0).getErrorMessage()
         );
         assertNull(response.getBody().getErrors().get(0).getFieldName());
-    }
-
-    @Test
-    void testHandleObjectNotFoundException() {
-        ObjectNotFoundException exception = mock(ObjectNotFoundException.class);
-
-        // Mock behavior for the exception
-        String entityName = "User";
-        String identifier = "123";
-        when(exception.getEntityName()).thenReturn(entityName);
-        when(exception.getIdentifier()).thenReturn(identifier);
-
-        // Assuming you need to get entityName and identifier for message source
-        // For instance, if you want to get the message key in a specific format
-        String errorMessage = messageSource.getMessage(
-			"NotFound",
-			new Object[]{
-				entityName.substring(0, 1).toUpperCase() + entityName.substring(1),
-				identifier.toString()
-			},
-			LocaleContextHolder.getLocale()
-		);
-
-        ResponseEntity<ErrorResponse> response = exceptionHandler.handleObjectNotFoundException(exception);
-
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-        assertEquals(1, response.getBody().getErrors().size());
-        assertEquals(errorMessage, response.getBody().getErrors().get(0).getErrorMessage());
-        assertEquals("id", response.getBody().getErrors().get(0).getFieldName());
     }
 
     @Test

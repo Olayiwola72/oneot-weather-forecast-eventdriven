@@ -11,10 +11,10 @@ import java.util.List;
  * This class serves as a Data Transfer Object (DTO) for XML serialization.
  */
 public record ForecastResponse(
-        /**
-         * A list of Forecast objects, each representing an individual weather forecast.
-         * 
-         * @JacksonXmlProperty: Sets the XML element name to "forecast" for each item in the list.
+        /*
+          A list of Forecast objects, each representing an individual weather forecast.
+
+          @JacksonXmlProperty: Sets the XML element name to "forecast" for each item in the list.
          * @JacksonXmlElementWrapper: When set to false, prevents wrapping the list in an additional XML element.
          */
         @JacksonXmlProperty(localName = "forecast")

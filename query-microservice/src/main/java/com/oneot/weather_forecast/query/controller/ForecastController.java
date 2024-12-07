@@ -1,6 +1,6 @@
 package com.oneot.weather_forecast.query.controller;
 
-import com.oneot.weather_forecast.common.model.Forecast;
+import com.oneot.weather_forecast.query.model.QueryForecast;
 import com.oneot.weather_forecast.query.dto.response.ApiResponseWrapper;
 import com.oneot.weather_forecast.query.dto.response.ForecastResponse;
 import com.oneot.weather_forecast.query.dto.response.ForecastResponseMapper;
@@ -28,9 +28,9 @@ import java.util.Optional;
  * It provides endpoints for clients to request forecast data for the current day and specific locations.
  */
 @RestController
-@RequestMapping("${routes.api.base}") // Base URL for the API
+@RequestMapping("${routes.api.v1-base-url}")
 @Validated // Enables validation for method parameters
-@Tag(name = "Forecast Controller", description = "Forecast Controller API") // Swagger tag for API documentation
+@Tag(name = "QueryForecast Controller", description = "QueryForecast Controller API") // Swagger tag for API documentation
 public class ForecastController {
 
     private final ForecastService forecastService; // Service to handle forecast logic
@@ -73,10 +73,10 @@ public class ForecastController {
             @NotBlank
             String place
     ) {
-        List<Forecast> forecasts = forecastService.getAllForecastsByPlace(place);
+        List<QueryForecast> queryForecasts = forecastService.getAllForecastsByPlace(place);
 
-        // Map the List<Forecast> to List<ForecastResponse>
-        List<ForecastResponse> forecastResponses = forecastResponseMapper.toForecastResponseList(forecasts);
+        // Map the List<QueryForecast> to List<ForecastResponse>
+        List<ForecastResponse> forecastResponses = forecastResponseMapper.toForecastResponseList(queryForecasts);
 
         // Retrieve the message from messages.properties
         String message = messageSource.getMessage("forecast.place.success", null, LocaleContextHolder.getLocale());
@@ -96,7 +96,7 @@ public class ForecastController {
     })
     @GetMapping(path = "${routes.api.today}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponseWrapper<ForecastResponse>> getTodayForecast() {
-        Optional<Forecast> forecastOptional = forecastService.getTodayForecast(); // Fetch today's forecast using the service
+        Optional<QueryForecast> forecastOptional = forecastService.getTodayForecast(); // Fetch today's forecast using the service
         ForecastResponse forecastResponse = forecastOptional
                 .map(forecastResponseMapper::toForecastResponse)
                 .orElse(null);

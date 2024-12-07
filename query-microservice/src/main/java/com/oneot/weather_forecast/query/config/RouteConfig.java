@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "routes.api") // Binds properties with the prefix 'routes.api' to this class
 public record RouteConfig(
-        String base,   // Base URL for the API
+        String v1BaseUrl,   // Base URL for the API
         String today,  // Endpoint for today's weather forecast
         String places  // Endpoint for places-related information
 ) {

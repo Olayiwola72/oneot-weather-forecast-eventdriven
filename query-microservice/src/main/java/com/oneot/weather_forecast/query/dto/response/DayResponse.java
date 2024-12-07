@@ -16,43 +16,18 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @Schema(description = "Represents the daytime weather forecast with detailed weather attributes.")
-public class DayResponse {
-
-    /**
-     * The weather phenomenon during the day (e.g., "Sunny", "Cloudy", "Rainy").
-     */
-    @Schema(description = "The weather phenomenon during the day", example = "Sunny", required = true)
-    private String phenomenon;
-
-    /**
-     * The minimum temperature expected during the day.
-     */
-    @Schema(description = "Minimum temperature expected during the day", example = "15")
-    private Integer tempMin;
-
-    /**
-     * The maximum temperature expected during the day.
-     */
-    @Schema(description = "Maximum temperature expected during the day", example = "25")
-    private Integer tempMax;
-
-    /**
-     * Additional textual description of the day weather.
-     */
-    @Schema(description = "Additional textual description of the day weather", example = "Clear skies throughout the day.")
-    private String text;
-
-    /**
-     * List of places for which the day forecast applies.
-     */
-    @Schema(description = "List of places where the daytime forecast is applicable")
-    private List<PlaceResponse> places;
+public class DayResponse extends WeatherPeriodResponse {
 
     /**
      * Specific weather information for Peipsi during the day, if applicable.
      */
     @Schema(description = "Specific weather information for Peipsi", example = "Slight winds in the afternoon.")
     private String peipsi;
+
+    public DayResponse(String phenomenon, Integer tempMin, Integer tempMax, String text, List<PlaceResponse> places, String peipsi) {
+        super(phenomenon, tempMin, tempMax, text, places);
+        this.peipsi = peipsi;
+    }
 
     /**
      * Constructs a DayResponse from the Day model.
