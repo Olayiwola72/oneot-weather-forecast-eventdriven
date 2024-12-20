@@ -4,6 +4,7 @@ import com.oneot.weather_forecast.query.model.Day;
 import com.oneot.weather_forecast.query.model.Night;
 import com.oneot.weather_forecast.query.model.Place;
 import com.oneot.weather_forecast.query.model.QueryForecast;
+import com.oneot.weather_forecast.query.testcontainers.MongoTestContainer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataMongoTest
 @ActiveProfiles("test")
 @ExtendWith(SpringExtension.class)
-class ForecastRepositoryTest {
+class ForecastRepositoryTest extends  MongoTestContainer {
 
     private String phenomenon;
     private Integer tempMin;

@@ -5,6 +5,7 @@ import com.oneot.weather_forecast.query.model.QueryForecast;
 import com.oneot.weather_forecast.query.model.Night;
 import com.oneot.weather_forecast.query.model.Place;
 import com.oneot.weather_forecast.query.repository.ForecastRepository;
+import com.oneot.weather_forecast.query.testcontainers.MongoTestContainer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,10 +25,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest // Load the full application context
 @ActiveProfiles({
-        "dev",
         "test"
 })
-class ForecastServiceIntegrationTest {
+class ForecastServiceIntegrationTest extends MongoTestContainer {
 
     @Autowired
     private ForecastService forecastService; // Inject the service to be tested

@@ -6,6 +6,7 @@ import com.oneot.weather_forecast.query.model.Night;
 import com.oneot.weather_forecast.query.model.Place;
 import com.oneot.weather_forecast.query.repository.ForecastRepository;
 import com.oneot.weather_forecast.query.config.RouteConfig;
+import com.oneot.weather_forecast.query.testcontainers.MongoTestContainer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest // Load the full application context
 @AutoConfigureMockMvc // Enable MockMvc
 @ActiveProfiles("test")
-class ForecastControllerTest {
+class ForecastControllerTest extends MongoTestContainer {
 
     @Autowired
     private ForecastRepository forecastRepository; // Inject the repository to set up test dat
