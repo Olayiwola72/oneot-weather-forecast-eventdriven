@@ -7,11 +7,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest(classes = SearchServiceApplication.class)
 @ActiveProfiles({"dev", "test"}) // 'test' profile has higher priority over 'dev'
-class SearchServiceApplicationTests {
-
-	static {
-		ElasticsearchTestContainer.getContainer(); // Ensure container is started
-	}
+class SearchServiceApplicationTests extends ElasticsearchTestContainer {
 
 	@Test
 	void contextLoads() {

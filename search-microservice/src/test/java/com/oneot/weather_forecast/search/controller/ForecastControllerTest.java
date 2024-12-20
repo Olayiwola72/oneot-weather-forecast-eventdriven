@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest// Load the full application context
 @ActiveProfiles({"dev","test"}) // using 'test' profile
 @AutoConfigureMockMvc // Enable MockMvc
-class ForecastControllerTest {
+class ForecastControllerTest extends ElasticsearchTestContainer {
 
     @Autowired
     private ForecastRepository forecastRepository; // Inject the repository to set up test dat
@@ -41,10 +41,6 @@ class ForecastControllerTest {
 
     private String place;
     private LocalDate today;
-
-    static {
-        ElasticsearchTestContainer.getContainer(); // Ensure container is started
-    }
 
     @BeforeEach
     void setUp() {

@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         "dev",
         "test"
 })
-class ForecastServiceIntegrationTest {
+class ForecastServiceIntegrationTest extends ElasticsearchTestContainer {
 
     @Autowired
     private ForecastService forecastService; // Inject the service to be tested
@@ -33,10 +33,6 @@ class ForecastServiceIntegrationTest {
     private ForecastRepository forecastRepository; // Inject the repository to set up test data
 
     private String place;
-
-    static {
-        ElasticsearchTestContainer.getContainer(); // Ensure container is started
-    }
 
     @BeforeEach
     void setUp() {

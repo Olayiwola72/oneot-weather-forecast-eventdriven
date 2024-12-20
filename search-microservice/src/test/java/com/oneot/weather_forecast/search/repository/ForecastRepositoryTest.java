@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {SearchServiceApplication.class})
 @ActiveProfiles({"dev", "test"})
-class ForecastRepositoryTest {
+class ForecastRepositoryTest extends ElasticsearchTestContainer {
 
     private String phenomenon;
     private Integer tempMin;
@@ -36,10 +36,6 @@ class ForecastRepositoryTest {
     private String place;
     private List<Place> places;
     private String peipsi;
-
-    static {
-        ElasticsearchTestContainer.getContainer(); // Ensure container is started
-    }
 
     @Autowired
     private ForecastRepository forecastRepository;
