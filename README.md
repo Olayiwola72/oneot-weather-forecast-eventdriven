@@ -1,9 +1,9 @@
 # **REST API Weather Forcast Application**
-This project is a Gradle multi-module Spring Boot application that fetches weather queryForecast data from the 
-<a href="http://www.ilmateenistus.ee/ilma_andmed/xml/queryForecast.php?lang=eng" target="_blank">Estonian XML Weather Service API</a>. It consists of two independent modules that can run as separate applications:
+This project is a Gradle multi-module Spring Boot application that fetches weather searchForecast data from the 
+<a href="http://www.ilmateenistus.ee/ilma_andmed/xml/searchForecast.php?lang=eng" target="_blank">Estonian XML Weather Service API</a>. It consists of two independent modules that can run as separate applications:
 
 - **Module 1 - Write Microservice:** A scheduled service that fetches weather data from a public XML API every 30 minutes and stores it in a PostgreSQL database.
-- **Module 2 - Query Microservice Web API:** A REST API service that allows users to query the weather queryForecast for specific locations or retrieve the day’s queryForecast for all available locations.
+- **Module 2 - Query Microservice Web API:** A REST API service that allows users to query the weather searchForecast for specific locations or retrieve the day’s searchForecast for all available locations.
 
 A third module exists to store common configurations or utility functions shared by the two primary modules.
 
@@ -23,17 +23,17 @@ A third module exists to store common configurations or utility functions shared
 
 ## **🌱 Project Overview**
 - Module 1 - Background Process
-This service fetches weather data from the Estonian Weather Service API, parses it (excluding wind and sea data), and saves the queryForecast in a PostgreSQL database.
+This service fetches weather data from the Estonian Weather Service API, parses it (excluding wind and sea data), and saves the searchForecast in a PostgreSQL database.
 
       Database Setup: On startup, the module will automatically set up the required database schema if it does not exist.
-      Scheduled Task: The @Scheduled annotation is used to run a task every 30 minutes that retrieves and processes the latest queryForecast data.
+      Scheduled Task: The @Scheduled annotation is used to run a task every 30 minutes that retrieves and processes the latest searchForecast data.
 
 - Module 2 - Query Microservice Web API
-The web module provides a REST API for querying queryForecast data:
+The web module provides a REST API for querying searchForecast data:
 
       Endpoints:
-      GET /api/queryForecasts/places?place={place}: Takes a location as input and returns the weather queryForecast for that specific location in JSON format.
-      GET /api/queryForecasts/today: Returns the current day's queryForecast for all locations in JSON format.
+      GET /api/searchForecasts/places?place={place}: Takes a location as input and returns the weather searchForecast for that specific location in JSON format.
+      GET /api/searchForecasts/today: Returns the current day's searchForecast for all locations in JSON format.
 
 Response Structure: Each response includes location, date, temperature, and relevant weather details to make it as user-friendly as possible.
 
@@ -81,7 +81,7 @@ To set up the project locally:
       ./gradlew :write-microservice:bootRun --args='--spring.profiles.active=prod'
       ```
 
-   - Run Module 2 - Query Microservice Web API: Start the web API server that serves queryForecast data via REST endpoints:
+   - Run Module 2 - Query Microservice Web API: Start the web API server that serves searchForecast data via REST endpoints:
       
       ```sh
       ./gradlew :query-microservice:bootRun --args='--spring.profiles.active=prod'
@@ -96,16 +96,16 @@ For detailed API information and testing, access the Swagger UI:
 
 Alternatively, you can access the Web API
 
-   - Get queryForecast for a specific location:
+   - Get searchForecast for a specific location:
    
       ```sh
-      GET http://localhost:8093/api/queryForecasts/places?place={place}
+      GET http://localhost:8093/api/searchForecasts/places?place={place}
       ```
 
-   - Get the current day's queryForecast for all locations:
+   - Get the current day's searchForecast for all locations:
       
       ```sh
-      GET http://localhost:8093/api/queryForecasts/today
+      GET http://localhost:8093/api/searchForecasts/today
       ```
 
 ## **Testing**

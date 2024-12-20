@@ -40,3 +40,6 @@ out/
 
 ### Docker temp files ###
 docker/
+
+### logs ###
+/logs/

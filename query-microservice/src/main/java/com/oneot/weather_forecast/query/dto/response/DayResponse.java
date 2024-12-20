@@ -1,6 +1,6 @@
 package com.oneot.weather_forecast.query.dto.response;
 
-import com.oneot.weather_forecast.common.model.Day;
+import com.oneot.weather_forecast.query.model.Day;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -25,8 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest // Load the full application context
-@ActiveProfiles("test") // using 'test' profile
 @AutoConfigureMockMvc // Enable MockMvc
+@ActiveProfiles("test")
 class ForecastControllerTest {
 
     @Autowired

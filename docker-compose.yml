@@ -1,117 +1,117 @@
 services:
 
-#  zookeeper:
-#    image: confluentinc/cp-zookeeper:latest
-#    restart: on-failure
-#    hostname: zookeeper
-#    container_name: zookeeper
-#    healthcheck:
-#      test: echo srvr | nc zookeeper 2181 || exit 1
-#      retries: 20
-#      interval: 10s
-#    ports:
-#      - "${ZOOKEEPER_PORT}:${ZOOKEEPER_PORT}"
-#      - "2181:2181"
-#    environment:
-#      ZOOKEEPER_CLIENT_PORT: 2181
-#      ZOOKEEPER_TICK_TIME: 2000
-#      ZOOKEEPER_SECURE_CLIENT_PORT: ${ZOOKEEPER_PORT}
-#      ZOOKEEPER_SERVER_CNXN_FACTORY: org.apache.zookeeper.server.NettyServerCnxnFactory
-#      ZOOKEEPER_SSL_KEYSTORE_LOCATION: /etc/kafka/secrets/zookeeper.keystore.jks
-#      ZOOKEEPER_SSL_KEYSTORE_PASSWORD: ${SSL_KEYSTORE_PASSWORD}
-#      ZOOKEEPER_SSL_KEYSTORE_TYPE: PKCS12
-#      ZOOKEEPER_SSL_TRUSTSTORE_LOCATION: /etc/kafka/secrets/zookeeper.truststore.jks
-#      ZOOKEEPER_SSL_TRUSTSTORE_PASSWORD: ${SSL_TRUSTSTORE_PASSWORD}
-#      ZOOKEEPER_SSL_TRUSTSTORE_TYPE: JKS
-#      ZOOKEEPER_DEBUG_LOGGING: true
-#      ZOOKEEPER_SSL_ENABLED_PROTOCOLS: TLSv1.2
-#
-#      # TLS 1.2 is the tested-default - TLS 1.3 has not been tested for production
-#      # You can evaluate TLS 1.3 for ZooKeeper by uncommenting the following two properties
-#      # and setting KAFKA_ZOOKEEPER_SSL_PROTOCOL on brokers
-#      #ZOOKEEPER_SSL_ENABLED_PROTOCOLS: TLSv1.3,TLSv1.2
-#      #ZOOKEEPER_SSL_QUORUM_ENABLED_PROTOCOLS: TLSv1.3,TLSv1.2
-#
-#      ZOOKEEPER_SSL_CIPHER_SUITES: ${SSL_CIPHER_SUITES}
-#      ZOOKEEPER_SSL_CLIENT_AUTH: need
-#      ZOOKEEPER_AUTH_PROVIDER_X509: org.apache.zookeeper.server.auth.X509AuthenticationProvider
-#      ZOOKEEPER_AUTH_PROVIDER_SASL: org.apache.zookeeper.server.auth.SASLAuthenticationProvider
-#    volumes:
-#      - ./secrets:/etc/kafka/secrets
-#      - ./docker/zookeeper-data:/var/lib/zookeeper/log
-#      - ./docker/zookeeper-txn:/var/lib/zookeeper/data
+  #  zookeeper:
+  #    image: confluentinc/cp-zookeeper:latest
+  #    restart: on-failure
+  #    hostname: zookeeper
+  #    container_name: zookeeper
+  #    healthcheck:
+  #      test: echo srvr | nc zookeeper 2181 || exit 1
+  #      retries: 20
+  #      interval: 10s
+  #    ports:
+  #      - "${ZOOKEEPER_PORT}:${ZOOKEEPER_PORT}"
+  #      - "2181:2181"
+  #    environment:
+  #      ZOOKEEPER_CLIENT_PORT: 2181
+  #      ZOOKEEPER_TICK_TIME: 2000
+  #      ZOOKEEPER_SECURE_CLIENT_PORT: ${ZOOKEEPER_PORT}
+  #      ZOOKEEPER_SERVER_CNXN_FACTORY: org.apache.zookeeper.server.NettyServerCnxnFactory
+  #      ZOOKEEPER_SSL_KEYSTORE_LOCATION: /etc/kafka/secrets/zookeeper.keystore.jks
+  #      ZOOKEEPER_SSL_KEYSTORE_PASSWORD: ${SSL_KEYSTORE_PASSWORD}
+  #      ZOOKEEPER_SSL_KEYSTORE_TYPE: PKCS12
+  #      ZOOKEEPER_SSL_TRUSTSTORE_LOCATION: /etc/kafka/secrets/zookeeper.truststore.jks
+  #      ZOOKEEPER_SSL_TRUSTSTORE_PASSWORD: ${SSL_TRUSTSTORE_PASSWORD}
+  #      ZOOKEEPER_SSL_TRUSTSTORE_TYPE: JKS
+  #      ZOOKEEPER_DEBUG_LOGGING: true
+  #      ZOOKEEPER_SSL_ENABLED_PROTOCOLS: TLSv1.2
+  #
+  #      # TLS 1.2 is the tested-default - TLS 1.3 has not been tested for production
+  #      # You can evaluate TLS 1.3 for ZooKeeper by uncommenting the following two properties
+  #      # and setting KAFKA_ZOOKEEPER_SSL_PROTOCOL on brokers
+  #      #ZOOKEEPER_SSL_ENABLED_PROTOCOLS: TLSv1.3,TLSv1.2
+  #      #ZOOKEEPER_SSL_QUORUM_ENABLED_PROTOCOLS: TLSv1.3,TLSv1.2
+  #
+  #      ZOOKEEPER_SSL_CIPHER_SUITES: ${SSL_CIPHER_SUITES}
+  #      ZOOKEEPER_SSL_CLIENT_AUTH: need
+  #      ZOOKEEPER_AUTH_PROVIDER_X509: org.apache.zookeeper.server.auth.X509AuthenticationProvider
+  #      ZOOKEEPER_AUTH_PROVIDER_SASL: org.apache.zookeeper.server.auth.SASLAuthenticationProvider
+  #    volumes:
+  #      - ./secrets:/etc/kafka/secrets
+  #      - ./docker/zookeeper-data:/var/lib/zookeeper/log
+  #      - ./docker/zookeeper-txn:/var/lib/zookeeper/data
 
-#  kafka:
-#    image: confluentinc/cp-kafka:latest
-#    hostname: kafka
-#    container_name: kafka
-#    depends_on:
-#      - zookeeper
-#    ports:
-#      - "${KAFKA_PORT}:${KAFKA_PORT}"  # HOST:CONTAINER, using environment variable for Kafka port
-#      - 9093:9093
-#      - 9094:9094
-#    environment:
-#      KAFKA_BROKER_ID: 1
-#
-#      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:${ZOOKEEPER_PORT}"
-#      KAFKA_ZOOKEEPER_SSL_CLIENT_ENABLE: 'true'
-#      # Broker uses TLSv1.2 by-default for ZooKeeper TLS connections
-#      # See note for ZOOKEEPER_SSL_ENABLED_PROTOCOLS regarding TLS 1.3 support
-#      # Uncomment the following property to evaluate TLS 1.3 for Broker<->ZooKeeper
-#      #KAFKA_ZOOKEEPER_SSL_PROTOCOL: TLSv1.3
-#      KAFKA_ZOOKEEPER_SSL_CIPHER_SUITES: ${SSL_CIPHER_SUITES}
-#      KAFKA_ZOOKEEPER_CLIENT_CNXN_SOCKET: org.apache.zookeeper.ClientCnxnSocketNetty
-#      KAFKA_ZOOKEEPER_SSL_KEYSTORE_LOCATION: /etc/kafka/secrets/kafka.keystore.jks
-#      KAFKA_ZOOKEEPER_SSL_KEYSTORE_PASSWORD: ${SSL_KEYSTORE_PASSWORD}
-#      KAFKA_ZOOKEEPER_SSL_KEYSTORE_TYPE: PKCS12
-#      KAFKA_ZOOKEEPER_SSL_TRUSTSTORE_LOCATION: /etc/kafka/secrets/kafka.truststore.jks
-#      KAFKA_ZOOKEEPER_SSL_TRUSTSTORE_PASSWORD: ${SSL_TRUSTSTORE_PASSWORD}
-#      KAFKA_ZOOKEEPER_SSL_TRUSTSTORE_TYPE: JKS
-#
-#      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
-#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,SSL:SSL,SSL_EXTERNAL:SSL
-#      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9093,SSL://kafka:${KAFKA_PORT},SSL_EXTERNAL://localhost:9094
-#      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093,SSL://0.0.0.0:${KAFKA_PORT},SSL_EXTERNAL://0.0.0.0:9094
-#
-#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-#      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-#      KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
-#
-#      KAFKA_SSL_KEYSTORE_FILENAME: kafka.keystore.jks
-#      KAFKA_SSL_KEYSTORE_CREDENTIALS: cert_creds
-#      KAFKA_SSL_KEY_CREDENTIALS: cert_creds
-#      KAFKA_SSL_TRUSTSTORE_FILENAME: kafka.truststore.jks
-#      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: cert_creds
-#      KAFKA_SSL_CLIENT_AUTH: 'required'
-#      KAFKA_SECURITY_PROTOCOL: SSL
-#      KAFKA_SECURITY_INTER_BROKER_PROTOCOL: SSL
-#
-#      # SSL Protocol Settings
-#      KAFKA_SSL_ENABLED_PROTOCOLS: TLSv1.2
-#      KAFKA_SSL_TRUSTSTORE_TYPE: JKS
-#      KAFKA_SSL_KEYSTORE_TYPE: JKS
-#      KAFKA_SSL_SECURE_RANDOM_IMPLEMENTATION: SHA1PRNG
-#      KAFKA_SSL_CIPHER_SUITES: ${SSL_CIPHER_SUITES}
-#      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: " "
-#      KAFKA_LISTENER_NAME_INTERNAL_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: " "
-#
-#      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: kafka:${KAFKA_PORT}
-#      CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper:${ZOOKEEPER_PORT}
-#      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
-#      # To avoid race condition with control-center
-#      CONFLUENT_METRICS_REPORTER_TOPIC_CREATE: 'true'
-#      CONFLUENT_METRICS_REPORTER_SECURITY_PROTOCOL: SSL
-#      CONFLUENT_METRICS_REPORTER_SSL_TRUSTSTORE_LOCATION: kafka.truststore.jks
-#      CONFLUENT_METRICS_REPORTER_SSL_KEYSTORE_LOCATION: kafka.keystore.jks
-#      CONFLUENT_METRICS_REPORTER_SSL_TRUSTSTORE_PASSWORD: cert_creds
-#      CONFLUENT_METRICS_REPORTER_SSL_KEYSTORE_PASSWORD: cert_creds
-#      CONFLUENT_METRICS_REPORTER_SSL_KEY_PASSWORD: cert_creds
-#      CONFLUENT_METRICS_ENABLE: "true"
-#      CONFLUENT_SUPPORT_CUSTOMER_ID: anonymous
-#    volumes:
-#      - ./secrets:/etc/kafka/secrets
-#      - ./docker/kafka-data:/var/lib/kafka/data
+  #  kafka:
+  #    image: confluentinc/cp-kafka:latest
+  #    hostname: kafka
+  #    container_name: kafka
+  #    depends_on:
+  #      - zookeeper
+  #    ports:
+  #      - "${KAFKA_PORT}:${KAFKA_PORT}"  # HOST:CONTAINER, using environment variable for Kafka port
+  #      - 9093:9093
+  #      - 9094:9094
+  #    environment:
+  #      KAFKA_BROKER_ID: 1
+  #
+  #      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:${ZOOKEEPER_PORT}"
+  #      KAFKA_ZOOKEEPER_SSL_CLIENT_ENABLE: 'true'
+  #      # Broker uses TLSv1.2 by-default for ZooKeeper TLS connections
+  #      # See note for ZOOKEEPER_SSL_ENABLED_PROTOCOLS regarding TLS 1.3 support
+  #      # Uncomment the following property to evaluate TLS 1.3 for Broker<->ZooKeeper
+  #      #KAFKA_ZOOKEEPER_SSL_PROTOCOL: TLSv1.3
+  #      KAFKA_ZOOKEEPER_SSL_CIPHER_SUITES: ${SSL_CIPHER_SUITES}
+  #      KAFKA_ZOOKEEPER_CLIENT_CNXN_SOCKET: org.apache.zookeeper.ClientCnxnSocketNetty
+  #      KAFKA_ZOOKEEPER_SSL_KEYSTORE_LOCATION: /etc/kafka/secrets/kafka.keystore.jks
+  #      KAFKA_ZOOKEEPER_SSL_KEYSTORE_PASSWORD: ${SSL_KEYSTORE_PASSWORD}
+  #      KAFKA_ZOOKEEPER_SSL_KEYSTORE_TYPE: PKCS12
+  #      KAFKA_ZOOKEEPER_SSL_TRUSTSTORE_LOCATION: /etc/kafka/secrets/kafka.truststore.jks
+  #      KAFKA_ZOOKEEPER_SSL_TRUSTSTORE_PASSWORD: ${SSL_TRUSTSTORE_PASSWORD}
+  #      KAFKA_ZOOKEEPER_SSL_TRUSTSTORE_TYPE: JKS
+  #
+  #      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+  #      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,SSL:SSL,SSL_EXTERNAL:SSL
+  #      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9093,SSL://kafka:${KAFKA_PORT},SSL_EXTERNAL://localhost:9094
+  #      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9093,SSL://0.0.0.0:${KAFKA_PORT},SSL_EXTERNAL://0.0.0.0:9094
+  #
+  #      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  #      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+  #      KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
+  #
+  #      KAFKA_SSL_KEYSTORE_FILENAME: kafka.keystore.jks
+  #      KAFKA_SSL_KEYSTORE_CREDENTIALS: cert_creds
+  #      KAFKA_SSL_KEY_CREDENTIALS: cert_creds
+  #      KAFKA_SSL_TRUSTSTORE_FILENAME: kafka.truststore.jks
+  #      KAFKA_SSL_TRUSTSTORE_CREDENTIALS: cert_creds
+  #      KAFKA_SSL_CLIENT_AUTH: 'required'
+  #      KAFKA_SECURITY_PROTOCOL: SSL
+  #      KAFKA_SECURITY_INTER_BROKER_PROTOCOL: SSL
+  #
+  #      # SSL Protocol Settings
+  #      KAFKA_SSL_ENABLED_PROTOCOLS: TLSv1.2
+  #      KAFKA_SSL_TRUSTSTORE_TYPE: JKS
+  #      KAFKA_SSL_KEYSTORE_TYPE: JKS
+  #      KAFKA_SSL_SECURE_RANDOM_IMPLEMENTATION: SHA1PRNG
+  #      KAFKA_SSL_CIPHER_SUITES: ${SSL_CIPHER_SUITES}
+  #      KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: " "
+  #      KAFKA_LISTENER_NAME_INTERNAL_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: " "
+  #
+  #      CONFLUENT_METRICS_REPORTER_BOOTSTRAP_SERVERS: kafka:${KAFKA_PORT}
+  #      CONFLUENT_METRICS_REPORTER_ZOOKEEPER_CONNECT: zookeeper:${ZOOKEEPER_PORT}
+  #      CONFLUENT_METRICS_REPORTER_TOPIC_REPLICAS: 1
+  #      # To avoid race condition with control-center
+  #      CONFLUENT_METRICS_REPORTER_TOPIC_CREATE: 'true'
+  #      CONFLUENT_METRICS_REPORTER_SECURITY_PROTOCOL: SSL
+  #      CONFLUENT_METRICS_REPORTER_SSL_TRUSTSTORE_LOCATION: kafka.truststore.jks
+  #      CONFLUENT_METRICS_REPORTER_SSL_KEYSTORE_LOCATION: kafka.keystore.jks
+  #      CONFLUENT_METRICS_REPORTER_SSL_TRUSTSTORE_PASSWORD: cert_creds
+  #      CONFLUENT_METRICS_REPORTER_SSL_KEYSTORE_PASSWORD: cert_creds
+  #      CONFLUENT_METRICS_REPORTER_SSL_KEY_PASSWORD: cert_creds
+  #      CONFLUENT_METRICS_ENABLE: "true"
+  #      CONFLUENT_SUPPORT_CUSTOMER_ID: anonymous
+  #    volumes:
+  #      - ./secrets:/etc/kafka/secrets
+  #      - ./docker/kafka-data:/var/lib/kafka/data
 
   kafka:
     image: confluentinc/cp-kafka:latest
@@ -154,10 +154,15 @@ services:
       KAFKA_SSL_CIPHER_SUITES: ${SSL_CIPHER_SUITES}
       KAFKA_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: " "
       KAFKA_LISTENER_NAME_INTERNAL_SSL_ENDPOINT_IDENTIFICATION_ALGORITHM: " "
-
     volumes:
       - ./secrets:/etc/kafka/secrets
       - ./docker/kafka-data:/var/lib/kafka/data
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "${KAFKA_PORT}" ]  # Check if Kafka is accepting connections on port KAFKA_PORT
+      interval: 10s
+      retries: 5
+      timeout: 5s
+      start_period: 30s
 
   kafka-tools:
     image: confluentinc/cp-kafka:latest
@@ -249,7 +254,7 @@ services:
     ports:
       - "${POSTGRES_DB_PORT}:${POSTGRES_DB_PORT}"  # HOST:CONTAINER
 
-#  docker-compose exec -it mongodb bash
+  #  docker-compose exec -it mongodb bash
   mongodb:
     image: mongo:latest
     environment:
@@ -278,6 +283,7 @@ services:
       SPRING_DATA_MONGODB_USERNAME: ${MONGO_DB_USER}
       SPRING_DATA_MONGODB_PASSWORD: ${MONGO_DB_PASSWORD}
       SPRING_DATA_MONGODB_DATABASE: ${MONGO_DB_DATABASE}
+      KAFKA_CONSUMER_GROUP_ID: forecast-group-query
       KAFKA_BOOTSTRAP_SERVER: SSL://kafka:${KAFKA_PORT}  # Kafka bootstrap server using the environment variable
       KAFKA_SECURITY_PROTOCOL: SSL
       KAFKA_SSL_KEYSTORE_LOCATION: /etc/kafka/secrets/consumer.keystore.jks
@@ -292,7 +298,7 @@ services:
       - kafka
       - mongodb
     volumes:
-    - ./secrets:/etc/kafka/secrets  # Mount the directory containing SSL certificates and keys
+      - ./secrets:/etc/kafka/secrets  # Mount the directory containing SSL certificates and keys
 
   write-service:
     build:
@@ -321,6 +327,62 @@ services:
     volumes:
       - ./secrets:/etc/kafka/secrets  # Mount the directory containing SSL certificates and keys
 
+  elasticsearch01:
+    image: elasticsearch:${STACK_VERSION}
+    container_name: elasticsearch01
+    environment:
+      - discovery.type=single-node
+      - network.host=0.0.0.0
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.verification_mode=none
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - CLUSTER_NAME=${CLUSTER_NAME}
+      - node.name=elasticsearch01
+    ports:
+      - "${ELASTIC_SEARCH_PORT}:${ELASTIC_SEARCH_PORT}"
+    volumes:
+      - elasticsearch_config:/usr/share/elasticsearch/config
+    healthcheck:
+      test: >
+        curl -s --cacert /usr/share/elasticsearch/config/certs/ca/ca.crt https://localhost:9200/_cluster/health | grep -q '"status":"\(green\|yellow\)"'
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 20s
+
+  search-service:
+    build:
+      context: ./
+      dockerfile: search.Dockerfile
+    ports:
+      - "${SEARCH_SERVICE_PORT}:${SEARCH_SERVICE_PORT}"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod # set profile
+      ELASTIC_SEARCH_DISABLE_SSL_VERIFICATION_MODE: true
+      ELASTIC_SEARCH_KEYSTORE_PATH: /usr/share/elasticsearch/config/certs/transport.p12
+      ELASTIC_SEARCH_HOST: elasticsearch01
+      KAFKA_CONSUMER_GROUP_ID: forecast-group-search
+      KAFKA_BOOTSTRAP_SERVER: SSL://kafka:${KAFKA_PORT}  # Kafka bootstrap server using the environment variable
+      KAFKA_SECURITY_PROTOCOL: SSL
+      KAFKA_SSL_KEYSTORE_LOCATION: /etc/kafka/secrets/consumer.keystore.jks
+      KAFKA_SSL_KEYSTORE_PASSWORD: ${SSL_SECRET}  # Set a password for the keystore
+      KAFKA_SSL_KEY_PASSWORD: ${SSL_SECRET}  # Set a password for the key
+      KAFKA_SSL_TRUSTSTORE_LOCATION: /etc/kafka/secrets/consumer.truststore.jks
+      KAFKA_SSL_TRUSTSTORE_PASSWORD: ${SSL_SECRET}  # Set a password for the truststore
+      KAFKA_SSL_ENABLED_PROTOCOLS: TLSv1.2
+      KAFKA_SSL_KEYSTORE_TYPE: JKS
+      KAFKA_SSL_TRUSTSTORE_TYPE: JKS
+    depends_on:
+      elasticsearch01:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    volumes:
+      - ./secrets:/etc/kafka/secrets  # Mount the directory containing SSL certificates and keys
+      - elasticsearch_config:/usr/share/elasticsearch/config
+
 volumes:
   mongo_data:
+    driver: local
+  elasticsearch_config:
     driver: local

@@ -28,7 +28,7 @@ openssl req -new -x509 -keyout tmp/datahub-ca.key -out tmp/datahub-ca.crt -days 
 
 echo " OK!"
 
-for i in 'producer' 'consumer' 'schema-registry' 'kafka' 'control-center' 'zookeeper'
+for i in 'producer' 'consumer' 'schema-registry' 'kafka' 'control-center' 'zookeeper' 'elasticsearch'
 do
 	printf "Creating cert and keystore of $i..."
 	# Create keystores
